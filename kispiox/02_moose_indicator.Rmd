@@ -27,25 +27,25 @@ mid.seral <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"),
 ```
 
 ## Background
-Moose (*Alces alces*) are a highly valued wildlife species in North America for a variety of cultural and economic reasons ( [Timmermann and Rogers 2005](https://pdfs.semanticscholar.org/55d2/86e83dd7cae6da270c153858b3d1a98d89de.pdf)). Prior to European colonization, moose were used extensively by Indigenous peoples for food, clothing and shelter ( [Moose In British Columbia](http://www.env.gov.bc.ca/wld/documents/moose.pdf)). In the last 100 years, moose have become an important, nutritious, staple food of many interior and coastal First Nations communities in BC ( [First Nations Health Authority fact sheet](https://www.fnha.ca/Documents/Traditional_Food_Fact_Sheets.pdf)). 
-
+Moose (*Alces alces*) are a highly valued wildlife species in North America for a variety of cultural and economic reasons ( [Timmermann and Rogers 2005](https://pdfs.semanticscholar.org/55d2/86e83dd7cae6da270c153858b3d1a98d89de.pdf)). Prior to European colonization, moose were used extensively by Indigenous peoples for food, clothing and shelter ( [Moose In British Columbia](http://www.env.gov.bc.ca/wld/documents/moose.pdf)). In the last 100 years, moose have become an important, nutritious, staple food of many interior and coastal First Nations communities in BC ([First Nations Health Authority fact sheet](https://www.fnha.ca/Documents/Traditional_Food_Fact_Sheets.pdf)). 
 
 ### Federal Status
-
-
-
-
-
+Moose are not legally listed by the Canadian government, nore have they been assessed by the Committee on the Status of Endangered Wildlife in Canada (COSEWIC). Across North America, moose abundance was recently estimated at approximately 1,000,000 animals, with approximately 1/3 of jurisdictions with increasing populations, 1/3 with decreasing populations and 1/3 with stable populations ([Timmermann and Rodgers 2017](https://alcesjournal.org/index.php/alces/article/download/177/248/1392)).
 
 ### Provincial Status
+In British Columbia, moose are [*yellow listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), meaning they are  apparently secure and not at risk of extinction. They have an [S5](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are demonstrably widespread, abundant, and secure.
 
-
+In the early 2010's it became apparent that moose populations were declining in central portions of the province. In response, a provincial moose management strategy was created to provide provincial
+direction for moose management, outline an approach for preparing regional moose action plans, and
+establish the scientific basis for making moose harvest management decisions ([FLNRORD 2015](https://www.env.gov.bc.ca/fw/wildlife/management-issues/docs/provincial_framework_for_moose_management_bc.pdf)). In addition, in 2013 the provincial government initiated a provincial research program focused on improving understanding of factors driving moose populations.
 
 ### First Nations Status
 
+Moose (*Ha daa*) is the most important wildlife species to the Gitanyow community in terms of consumptive demand, providing sustenance during the winter months (Hamelin, E. 2003. Seasonal Movements and Distribution Patterns of Moose (Alces alces) within the Kitwanga Watershed). 
 
 
-### Conservation Status of Grizzly Bear in the Kispiox TSA
+
+### Conservation Status of Moose in the Kispiox TSA
 
 
 
@@ -89,29 +89,47 @@ Moose have an important and complex relationship with forestry development. Base
 
 
  
-  
+## Relationship to Forestry
+Recent moose population declines in central parts of the province appeared to coincide with mountain pine beetle outbreak and salvage harvest, potentially implicating large-scale harvest and road building as a cause of that decline. The [Provincial Moose Research Project](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/wildlife/wildlife-conservation/moose/moose-research) has been investigating whether landscape change, including from forestry activities, is related to moose mortality and population trends.  
+
+Historically, some amount forest harvest has been viewed as favourable to moose populations, by creating open, young (less than 40 year old) forest stands that provide forage for moose. A mix of young and old forest provides forage and cover that moose need for survival ([Eastman 1974](http://www.arlis.org/docs/vol2/hydropower/APA_DOC_no._1065.pdf); [Schwab 1985](https://open.library.ubc.ca/collections/ubctheses/831/items/1.0097322); [Proulx and Karix 2005](https://www.canadianfieldnaturalist.ca/cfn/index.php/cfn/article/download/104/104); [Poole and Stuart-Smith 2006](https://www.researchgate.net/profile/Kim-Poole-3/publication/237973775_Winter_habitat_selection_by_female_moose_in_western_interior_montane_forests/links/0046351ef1db0e19df000000/Winter-habitat-selection-by-female-moose-in-western-interior-montane-forests.pdf))
 
 ### Roads
-- road density in a watershed area, with an ideal target of less than 1km/km^2^   
+Recent research has shown that moose in area with higher road densities have a higher risk of mortality from human hunters and starvation, but a lower risk or mortality form wolves ([Mumma and Gillingham 2019](https://web.unbc.ca/~michael/Mumma_and_Gillingham_2019.pdf)). Thus, road development from forestry could both potentially positively and negatively affect moose. 
 
+Forestry road density, within a landscape unit, can be used as an indicator of mortality risk to moose from hunter harvest, starvation and wolves. There are no clear thresholds for road density that clearly increase or decrease mortality risk for moose, but could be considered in the context of other information. 
 
 ### Forest Stand Characteristics
-  - percentage of watershed area that is 5 to 30 years old, with an ideal percentage of 30%
- - percentage of watershed area that is conifer stands greater than 5 ha in size and 15m tall, with an ideal percentage of 40%
+Recent research has shown that region-specific differences in vegetation composition and regrowth influence habitat quality for moose ([Mumma et al. 2021](https://www.sciencedirect.com/science/article/pii/S0378112720315322)), and thus local habitat conditions and context are important to evaluating impacts of forestry on moose. In some cases, moose avoid very young (1 to 8 yeqar old) cutblocks, and moose mortality from starvation is higher in areas with more cutblocks ([Mumma and Gillingham 2019](https://web.unbc.ca/~michael/Mumma_and_Gillingham_2019.pdf)), perhaps due to poorer forage quality in cutblocks (Werner, pers. comm.). "Uplifts', or increases in forest harvest over a short period of time, particularly in low productivity ecosystems, may negatively affect moose. 
+
+The percentage of a landscape unit that is 5 to 30 year old cutblocks is a useful indicator of forage availability for moose, where very below or very high proportions could indicate poor habitat conditions for moose. 
 
 ## Current Conditions
-
-
+Below provides a summary of current and recent conditions of moose populations and habitat in the Kispiox TSA. 
 
 ### Population Status and Trend
-Moose population data was obtained by searching the BC government's [species inventory web explorer (SIWE)](https://catalogue.data.gov.bc.ca/dataset/species-inventory-web-explorer-siwe) for 'moose' inventory data collected in the Skeena region. Any data on moose density, populations, bull:cow ratios and calf:cow ratios was compiled. 
+The total population of moose in the Skeena region was [estimated at 25,000 to 45,000 animals in 2017](https://www.env.gov.bc.ca/fw/wildlife/management-issues/docs/2017_Provincial_Ungulate_Numbers_Sept_18_Final.pdf). 
+
+Current and recent moose population estimates for the Kispiox TSA were obtained from the BC government's [species inventory web explorer (SIWE)](https://catalogue.data.gov.bc.ca/dataset/species-inventory-web-explorer-siwe) by searching for 'moose' inventory data collected in the Skeena region. Any data on moose density, populations, bull:cow ratios and calf:cow ratios was compiled. 
+
+Moose surveys were completed in the Nass Wildlife Area (NWA), which overlaps parts of the western part of Kispiox TSA and wildlife management units (WMUs) 6-15 and 6-30, in 2001, 2007, 2011 and 2017. Surveys were also completed in the Kispiox Valley, which overlaps much of the Kipsiox TSA, including the majority of WMU 6-30, and portions of WMUs 6-08, 6-09 and 6-15.
+
+```{r moose pop trend, fig.cap = "Figure 1. Moose population estimates for the Nass Wildlife Area and Kispiox Valley in the Kispiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
+data.moose.pop <- read.csv (file = here ("wildlife/data/kispiox/moose_density_20211125.csv"),
+                            header = T)
 
 
-Surveys completed in Nass Wildlife Area (NWA), which overlaps parrs of the western part of Kispiox TSA and WMUs 6-15 and 6-30.
+
+```
+
+
+
+
+
 
 In NWA, decreasing population trend from 2001 to 2011, but increase again between 2011 and 2017 (but not to 2001 peak).
 
-Kispiox Valley survey area overlaps much of the Kipsiox TSA, including  much of wildlife management unit 6-30, and portions of 6-08, 6-09 and 6-15. Surveyed in 1999, 2014 and 2020 (prelimnary results) suggested no popualtion delicne, despite decreasing hutner success rates. Hunter success declien may be due to older cutblocks, adn poorer sightlines for hunters, limiting their success. 
+Kispiox Valley survey area overlaps much of the Kipsiox TSA,  Surveyed in 1999, 2014 and 2020 (prelimnary results) suggested no popualtion delicne, despite decreasing hutner success rates. Hunter success declien may be due to older cutblocks, adn poorer sightlines for hunters, limiting their success. 
 
 
 In teh Kispiox area, hunter harvest generally incfreased form the late 1970's (~20 animals) to mid 1990's (~40 animals), but declined from the mid 1990's to 2010 (~15 animals). Hunter effort (moose hunter days/kill) increased from 2005 (~30 days/kill) to 2011 (~80 days/kill). In the Bulkley-Lakes region (southern part of the Kispioc TSA), moose harvest has been declining from the 1980's (~1300 aniamsl) to 2010 (~600 aniamls). Harvest delvinces generall correalted with teh numbe rof resident hunters, suggesting delcin in harvets is due to decline in hunter particaption in moose hunting. Hunter effort is realtivel low and has been mostly below 35 days/kill from teh late 1920's to 2010. Mangament target is 25 to 35 days/kill
@@ -127,8 +145,14 @@ Forests, Lands and Natural Resource Operations. Smithers, BC. 57 pp.
 
 
 ```{r, moose pop density map, fig.cap = "Figure 1. Most recent moose density estimates by wildlife management unit in the Okanagan Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
-data.moose.pop <- read.csv (file = here ("wildlife/data/okanagan/moose_density_20200504.csv"),
+data.moose.pop <- read.csv (file = here ("wildlife/data/kispiox/moose_density_20211125.csv"),
                             header = T)
+
+
+
+
+
+
 data.wmu <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
                          layer = "clip_wmu", 
                          quiet = T)
