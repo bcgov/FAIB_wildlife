@@ -1,0 +1,103 @@
+---
+title: "Northern Goshawk Analysis for the Kispiox Timber Supply Review"
+author: "Tyler Muhly, Forest Analysis and Inventory Branch"
+date: "8/12/2021"
+output: html_document
+---
+
+```{r setup and data, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library (here)
+library (ggplot2)
+library (data.table)
+library (sf)
+library (dplyr)
+library (viridis)
+library (ggrepel)
+library (ggspatial)
+library (units)
+
+tsa_bound <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "tsa_bound"))
+cutblocks <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "cutblocks"))
+vri <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "vri"))
+wmu <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "wmu"))
+roads <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "roads_dra_ften"))
+lu <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "lu"))
+bec <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "bec"))
+mid.seral <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "mid_seral"))
+data.moose.pop <- read.csv (file = here ("data/kispiox/moose_density_20211125.csv"),
+                            header = T)
+```
+
+## Background
+interior subspecies of northern goshawk (Accipiter gentilis atricapillus) 
+
+declined severely in the past few years in the Skeena Region ( Eamer, J. 2018. Action plan for recovery and conservation of interior northern goshawks in the Skeena Region: Background and framework. Prepared for Ministry of Forests, Lands, Natural
+Resource Operations and Rural Development, Skeena Region. Smithers BC. )
+
+
+
+### Federal Status
+
+
+### Provincial Status
+In British Columbia, interiro northern goshawk are [*blue listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), meaning they are at risk, but not extirpated, endangered or threatened. They have an [S3S$](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are siomehwer between apparently secure and vulnerable due to a restricted range, relatively few populations, recent and widespread declines, or other factors.
+
+
+ High Risk in the Skeena Region (Eamer 2008)
+
+### First Nations Status
+
+
+
+
+## Relationship to Forestry
+
+
+### Roads
+
+
+
+### Forest Stand Characteristics
+
+
+
+
+## Current Conditions
+
+
+
+### Population Status and Trend
+
+
+
+
+### Roads
+
+
+
+
+### Forest Stand Characteristics
+
+
+## Future Conditions
+- analyze outputs from timber supply models, if/when available
+
+### Alternate Forest Management Regimes for Moose
+- is there a moose focused scenario we could analyze?
+
+### Roads
+- future road densities, at 10 years intervals
+
+### Forest Stand Characteristics
+- future proportion of 5 to 30 year old cutblocks
+
+### Timber Supply
+- comparison of timber supply between base case and 'moose case'
+
+## Mitigating Potential Impacts of Forest Harvest to Moose
+
+
+
+
+## Uncertainties and Limitations 

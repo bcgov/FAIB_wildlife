@@ -18,226 +18,84 @@ library (ggspatial)
 library (units)
 
 tsa_bound <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "tsa_bound"))
-gbpu <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "gbpu"))
+cutblocks <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "cutblocks"))
+vri <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "vri"))
+wmu <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "wmu"))
 roads <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "roads_dra_ften"))
 lu <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "lu"))
-wha <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "wha_6055"))
 bec <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "bec"))
 mid.seral <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "mid_seral"))
+data.moose.pop <- read.csv (file = here ("data/kispiox/moose_density_20211125.csv"),
+                            header = T)
 ```
 
 ## Background
-Moose (*Alces alces*) are a highly valued wildlife species in North America for a variety of cultural and economic reasons ( [Timmermann and Rogers 2005](https://pdfs.semanticscholar.org/55d2/86e83dd7cae6da270c153858b3d1a98d89de.pdf)). Prior to European colonization, moose were used extensively by Indigenous peoples for food, clothing and shelter ( [Moose In British Columbia](http://www.env.gov.bc.ca/wld/documents/moose.pdf)). In the last 100 years, moose have become an important, nutritious, staple food of many interior and coastal First Nations communities in BC ([First Nations Health Authority fact sheet](https://www.fnha.ca/Documents/Traditional_Food_Fact_Sheets.pdf)). 
+Moose (*Alces alces*) are the largest ungulate species in British Columbia, and are widely distributed throughout the interior of the province (see [Moose In British Columbia](http://www.env.gov.bc.ca/wld/documents/moose.pdf)). They are a highly valued wildlife species across North America for a variety of cultural and economic reasons ([Timmermann and Rogers 2005](https://pdfs.semanticscholar.org/55d2/86e83dd7cae6da270c153858b3d1a98d89de.pdf)). 
 
 ### Federal Status
-Moose are not legally listed by the Canadian government, nore have they been assessed by the Committee on the Status of Endangered Wildlife in Canada (COSEWIC). Across North America, moose abundance was recently estimated at approximately 1,000,000 animals, with approximately 1/3 of jurisdictions with increasing populations, 1/3 with decreasing populations and 1/3 with stable populations ([Timmermann and Rodgers 2017](https://alcesjournal.org/index.php/alces/article/download/177/248/1392)).
+Moose are not legally listed by the Canadian government and their conservation status has not been assessed by the Committee on the Status of Endangered Wildlife in Canada (COSEWIC). Across North America, moose abundance was recently estimated at approximately 1,000,000 animals, with approximately 1/3 of jurisdictions with increasing populations, 1/3 with decreasing populations and 1/3 with stable populations ([Timmermann and Rodgers 2017](https://alcesjournal.org/index.php/alces/article/download/177/248/1392)).
 
 ### Provincial Status
 In British Columbia, moose are [*yellow listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), meaning they are  apparently secure and not at risk of extinction. They have an [S5](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are demonstrably widespread, abundant, and secure.
 
 In the early 2010's it became apparent that moose populations were declining in central portions of the province. In response, a provincial moose management strategy was created to provide provincial
-direction for moose management, outline an approach for preparing regional moose action plans, and
-establish the scientific basis for making moose harvest management decisions ([FLNRORD 2015](https://www.env.gov.bc.ca/fw/wildlife/management-issues/docs/provincial_framework_for_moose_management_bc.pdf)). In addition, in 2013 the provincial government initiated a provincial research program focused on improving understanding of factors driving moose populations.
+direction for moose management and
+establish a scientific basis for making moose management decisions ([FLNRORD 2015](https://www.env.gov.bc.ca/fw/wildlife/management-issues/docs/provincial_framework_for_moose_management_bc.pdf)). In addition, in 2013 the provincial government initiated a provincial research program focused on improving understanding of factors driving moose populations.
 
 ### First Nations Status
-
-Moose (*Ha daa*) is the most important wildlife species to the Gitanyow community in terms of consumptive demand, providing sustenance during the winter months (Hamelin, E. 2003. Seasonal Movements and Distribution Patterns of Moose (Alces alces) within the Kitwanga Watershed). 
-
-
-
-### Conservation Status of Moose in the Kispiox TSA
-
-
-
-```{r gbpu status, warning = F, message = F, echo = F}
-
-ggplot (data = gbpu) +
-        geom_sf (aes (fill = CONSERVATION_CONCERN_RANK)) +
-        geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +
-        geom_sf_label (data = gbpu, aes(label = POPULATION_NAME)) +
-        xlab("Longitude") + ylab("Latitude") +
-        ggtitle ("Conservation Status of Grizzly Bear Population Units 
-Overlapping the Kispiox Timber Supply Area") +
-        scale_fill_viridis (option="turbo", discrete = T) +
-        guides (fill = guide_legend (title = "Provincial Conservation Status")) +
-        annotation_scale(location = "br", width_hint = 0.5, pad_y = unit(-0.001, "in")) +
-        annotation_north_arrow(location = "br", which_north = "true", 
-              pad_x = unit(0, "in"), pad_y = unit(0.1, "in"),
-              style = north_arrow_fancy_orienteering) +
-        labs (caption = "Kispiox TSA boundary indicated by green dashed line.") +
-        theme (axis.text.x = element_text (angle = 30, hjust = 1))
-
-```
+Moose are a highly valued wildlife species to many First Nations communities in British Columbia. Prior to European colonization, moose were used extensively by Indigenous peoples for food, clothing and shelter (see [Moose In British Columbia](http://www.env.gov.bc.ca/wld/documents/moose.pdf)). In the last 100 years, moose have become an important, nutritious, staple food of many interior and coastal First Nations communities in British Columbia ([First Nations Health Authority fact sheet](https://www.fnha.ca/Documents/Traditional_Food_Fact_Sheets.pdf)). The Gitanyow community has identified moose (*Ha daa*) as the most important wildlife species in terms of consumptive demand, as they provide important sustenance during the winter months (see Hamelin, 2003. Seasonal Movements and Distribution Patterns of Moose (*Alces alces*) within the Kitwanga Watershed). 
 
 ## Relationship to Forestry
+Historically, some amount of forest harvest has generally been viewed as positive for moose habitat and populations, by creating open, young (less than 40 year old) forest stands that provide forage (e.g., shrubs such as willow and red osier dogwood) for moose. Moose also require older stands with closed canopies to provide shelter from snow in winter and heat in summer, and thus a mix of young and old forest provides forage and cover that moose need for survival ([Eastman 1974](http://www.arlis.org/docs/vol2/hydropower/APA_DOC_no._1065.pdf); [Schwab 1985](https://open.library.ubc.ca/collections/ubctheses/831/items/1.0097322); [Proulx and Karix 2005](https://www.canadianfieldnaturalist.ca/cfn/index.php/cfn/article/download/104/104); [Poole and Stuart-Smith 2006](https://www.researchgate.net/profile/Kim-Poole-3/publication/237973775_Winter_habitat_selection_by_female_moose_in_western_interior_montane_forests/links/0046351ef1db0e19df000000/Winter-habitat-selection-by-female-moose-in-western-interior-montane-forests.pdf)). 
 
-
-
-
-
-Research has shown that forestry activity influences moose density and distribution, both positively and negatively. Forestry cutblocks remove forest canopy, which generally increases the production of deciduous shrub browse on landscapes, which can positively influence moose. Shrub production in forestry cutblocks varies, but appears to peak anywhere from at 5 to 30 years after harvest, and moose appear to use these stand ages the most. Cutblocks less than 5 years old and older than 30 years old (i.e., mid-seral stands), appear to generally be of less forage value to moose and receive less use as foraging habitat. However, older stands, including mature cutblocks, can benefit moose by providing valuable cover habitat. Closed canopy conifer forest stands are important habitat for providing thermal cover in summer and to intercept snow in high snowfall years or areas. 
-
-Forest harvest, when done in moderation and in a way that creates a diversity of forest stand ages and types, can benefit moose. However, the creation of road infrastrucutre to extract timber may negatively affect moose density and distribution overall. Forestry roads can make areas more accessible to moose hunters, increasing hunting mortality, which can limit moose population size. The overall effects of forestry on moose may be negative when roads endure on the landscape and are not actively decommissioned or recovered. 
-
-Moose have an important and complex relationship with forestry development. Based on a review of previous research on the effects of forestry on moose, the relationship is most likely to be positive when:
-  - At the scale of a moose home range (i.e., approximately 10 km^2^), forest cutblocks are interspersed with large mature or old forest stands, and cut in a progressive way over a 5 to 10 year period so there is a distribution of cutblock ages 
-  - Silvicultural practices on harvested stands allow for growth of some shrubs, particularly along cutblock edges with mature stands   
-  - Roads are minimized, blocked, deactivated or restored
-  
-  
-  
-
-
- 
-## Relationship to Forestry
-Recent moose population declines in central parts of the province appeared to coincide with mountain pine beetle outbreak and salvage harvest, potentially implicating large-scale harvest and road building as a cause of that decline. The [Provincial Moose Research Project](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/wildlife/wildlife-conservation/moose/moose-research) has been investigating whether landscape change, including from forestry activities, is related to moose mortality and population trends.  
-
-Historically, some amount forest harvest has been viewed as favourable to moose populations, by creating open, young (less than 40 year old) forest stands that provide forage for moose. A mix of young and old forest provides forage and cover that moose need for survival ([Eastman 1974](http://www.arlis.org/docs/vol2/hydropower/APA_DOC_no._1065.pdf); [Schwab 1985](https://open.library.ubc.ca/collections/ubctheses/831/items/1.0097322); [Proulx and Karix 2005](https://www.canadianfieldnaturalist.ca/cfn/index.php/cfn/article/download/104/104); [Poole and Stuart-Smith 2006](https://www.researchgate.net/profile/Kim-Poole-3/publication/237973775_Winter_habitat_selection_by_female_moose_in_western_interior_montane_forests/links/0046351ef1db0e19df000000/Winter-habitat-selection-by-female-moose-in-western-interior-montane-forests.pdf))
+Recent moose population declines in parts of central British Columbia coincided with the last mountain pine beetle outbreak and salvage harvest, potentially implicating large-scale harvest and road building as a cause of population decline. The [Provincial Moose Research Project](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/wildlife/wildlife-conservation/moose/moose-research) has been investigating whether landscape change, including from forestry activities, is related to moose mortality and population trends. Initial results of this research has shown that the relationship between moose and forestry is perhaps more variable and complex than previously believed, depending on ecosystem productivity and abundance of predators (both human and non-human, such as wolves) in a region. 
 
 ### Roads
-Recent research has shown that moose in area with higher road densities have a higher risk of mortality from human hunters and starvation, but a lower risk or mortality form wolves ([Mumma and Gillingham 2019](https://web.unbc.ca/~michael/Mumma_and_Gillingham_2019.pdf)). Thus, road development from forestry could both potentially positively and negatively affect moose. 
+Recent research from interior British Columbia has shown that moose in areas with higher road densities have a higher risk of mortality from human hunters and starvation, but a lower risk or mortality from wolves ([Mumma and Gillingham 2019](https://web.unbc.ca/~michael/Mumma_and_Gillingham_2019.pdf)). Thus, road development from forestry could both potentially positively and negatively affect moose populations, depending on predator densities and forage quality in the area. 
 
-Forestry road density, within a landscape unit, can be used as an indicator of mortality risk to moose from hunter harvest, starvation and wolves. There are no clear thresholds for road density that clearly increase or decrease mortality risk for moose, but could be considered in the context of other information. 
+Forestry road density within a landscape unit can be used as an indicator of mortality risk to moose from hunter harvest, starvation and wolves. There are no clear thresholds for road density that clearly increase or decrease mortality risk for moose, but road density indicators can be considered in the context of other information. 
 
 ### Forest Stand Characteristics
-Recent research has shown that region-specific differences in vegetation composition and regrowth influence habitat quality for moose ([Mumma et al. 2021](https://www.sciencedirect.com/science/article/pii/S0378112720315322)), and thus local habitat conditions and context are important to evaluating impacts of forestry on moose. In some cases, moose avoid very young (1 to 8 yeqar old) cutblocks, and moose mortality from starvation is higher in areas with more cutblocks ([Mumma and Gillingham 2019](https://web.unbc.ca/~michael/Mumma_and_Gillingham_2019.pdf)), perhaps due to poorer forage quality in cutblocks (Werner, pers. comm.). "Uplifts', or increases in forest harvest over a short period of time, particularly in low productivity ecosystems, may negatively affect moose. 
+As indicated above, forestry can indirectly influence moose by directly influencing the composition of vegetation in forest stands in an area. Recent research has shown that region-specific differences in vegetation composition and regrowth after forest harvest can influence habitat quality for moose ([Mumma et al. 2021](https://www.sciencedirect.com/science/article/pii/S0378112720315322)), and thus local habitat conditions and context are important to evaluating impacts of forestry on moose. In some cases, moose avoid very young (1 to 8 year old) cutblocks, and moose mortality from starvation is higher in areas with more cutblocks ([Mumma and Gillingham 2019](https://web.unbc.ca/~michael/Mumma_and_Gillingham_2019.pdf)), perhaps due to poorer forage quality in large cutblocks (J. Werner, pers. comm.). Therefore, "uplifts", or significant increases in forest harvest over a short period of time, particularly in low productivity ecosystems, may negatively affect moose. 
 
-The percentage of a landscape unit that is 5 to 30 year old cutblocks is a useful indicator of forage availability for moose, where very below or very high proportions could indicate poor habitat conditions for moose. 
+The percentage of forested area within a landscape unit that is 5 to 30 year old cutblocks is a useful indicator of forage availability for moose, where very low or high proportions could indicate poor habitat conditions for moose due to a lack of forage or forest cover, respectively. This indicator should be considered in the context of forest productivity and early seral forest vegetation community composition in the area. 
 
 ## Current Conditions
-Below provides a summary of current and recent conditions of moose populations and habitat in the Kispiox TSA. 
+Below provides a summary of current and recent conditions of moose population and habitat indicators in the Kispiox TSA. 
 
 ### Population Status and Trend
-The total population of moose in the Skeena region was [estimated at 25,000 to 45,000 animals in 2017](https://www.env.gov.bc.ca/fw/wildlife/management-issues/docs/2017_Provincial_Ungulate_Numbers_Sept_18_Final.pdf). 
+The total population of moose in the Skeena region was [estimated at 25,000 to 45,000 animals in 2017](https://www.env.gov.bc.ca/fw/wildlife/management-issues/docs/2017_Provincial_Ungulate_Numbers_Sept_18_Final.pdf). Current and recent moose population estimates for the Kispiox TSA were obtained from the BC government's [species inventory web explorer (SIWE)](https://catalogue.data.gov.bc.ca/dataset/species-inventory-web-explorer-siwe) by searching for 'moose' inventory data collected in the Skeena region. Any data on moose density, populations, bull:cow ratios and calf:cow ratios was compiled. 
 
-Current and recent moose population estimates for the Kispiox TSA were obtained from the BC government's [species inventory web explorer (SIWE)](https://catalogue.data.gov.bc.ca/dataset/species-inventory-web-explorer-siwe) by searching for 'moose' inventory data collected in the Skeena region. Any data on moose density, populations, bull:cow ratios and calf:cow ratios was compiled. 
+Moose surveys were completed in the Nass Wildlife Area (NWA), which overlaps western portions of the Kispiox TSA and portions of wildlife management units (WMUs) 6-15 and 6-30, in 2001, 2007, 2011 and 2017. Surveys were also completed in the Kispiox Valley, which overlaps much of the Kipsiox TSA, including the majority of WMU 6-30, and portions of WMUs 6-08, 6-09 and 6-15.
 
-Moose surveys were completed in the Nass Wildlife Area (NWA), which overlaps parts of the western part of Kispiox TSA and wildlife management units (WMUs) 6-15 and 6-30, in 2001, 2007, 2011 and 2017. Surveys were also completed in the Kispiox Valley, which overlaps much of the Kipsiox TSA, including the majority of WMU 6-30, and portions of WMUs 6-08, 6-09 and 6-15.
+```{r, moose bull/cow ratio, fig.cap = "Figure 1. Wildlife management units in the Kipsiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
 
-```{r moose pop trend, fig.cap = "Figure 1. Moose population estimates for the Nass Wildlife Area and Kispiox Valley in the Kispiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
-data.moose.pop <- read.csv (file = here ("wildlife/data/kispiox/moose_density_20211125.csv"),
-                            header = T)
+# data.moose.pop$survey_area <- ""
+# data.moose.pop$survey_area [data.moose.pop$WILDLIFE_MGMT_UNIT_ID == "6-15/6-30"] <- "Nass Wildlife Area"
+# data.moose.pop$survey_area [data.moose.pop$WILDLIFE_MGMT_UNIT_ID == "6-8/6-9/6-15/6-30"] <- "Kispiox Valley"
+# 
+# wmu$survey_area <- ""
+# wmu$survey_area [wmu$WILDLIFE_MGMT_UNIT_ID == "6-15"] <- "Nass Wildlife Area"
+# wmu$survey_area [wmu$WILDLIFE_MGMT_UNIT_ID == "6-30"] <- "Nass Wildlife Area"
+# wmu$survey_area  [wmu$WILDLIFE_MGMT_UNIT_ID == "6-8"] <- "Kispiox Valley"
+# wmu$survey_area  [wmu$WILDLIFE_MGMT_UNIT_ID == "6-9"] <- "Kispiox Valley"
+# wmu$survey_area  [wmu$WILDLIFE_MGMT_UNIT_ID == "6-15"] <- "Kispiox Valley"
+# wmu$survey_area  [wmu$WILDLIFE_MGMT_UNIT_ID == "6-30"] <- "Kispiox Valley"
+# 
+# survey.area <- wmu %>% 
+#                 group_by(survey_area) %>%
+#                  summarise(geometry = sf::st_union(GEOMETRY)) 
 
-
-
-```
-
-
-
-
-
-
-In NWA, decreasing population trend from 2001 to 2011, but increase again between 2011 and 2017 (but not to 2001 peak).
-
-Kispiox Valley survey area overlaps much of the Kipsiox TSA,  Surveyed in 1999, 2014 and 2020 (prelimnary results) suggested no popualtion delicne, despite decreasing hutner success rates. Hunter success declien may be due to older cutblocks, adn poorer sightlines for hunters, limiting their success. 
-
-
-In teh Kispiox area, hunter harvest generally incfreased form the late 1970's (~20 animals) to mid 1990's (~40 animals), but declined from the mid 1990's to 2010 (~15 animals). Hunter effort (moose hunter days/kill) increased from 2005 (~30 days/kill) to 2011 (~80 days/kill). In the Bulkley-Lakes region (southern part of the Kispioc TSA), moose harvest has been declining from the 1980's (~1300 aniamsl) to 2010 (~600 aniamls). Harvest delvinces generall correalted with teh numbe rof resident hunters, suggesting delcin in harvets is due to decline in hunter particaption in moose hunting. Hunter effort is realtivel low and has been mostly below 35 days/kill from teh late 1920's to 2010. Mangament target is 25 to 35 days/kill
+#survey.area <- merge (survey.area, data.moose.pop, all = TRUE, by = "survey_area")
 
 
-
-Thiessen, C. 2014. Skeena Region moose harvest overview: 1976 – 2011. BC Ministry of 
-Forests, Lands and Natural Resource Operations. Smithers, BC. 57 pp.
-
-
-
-
-
-
-```{r, moose pop density map, fig.cap = "Figure 1. Most recent moose density estimates by wildlife management unit in the Okanagan Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
-data.moose.pop <- read.csv (file = here ("wildlife/data/kispiox/moose_density_20211125.csv"),
-                            header = T)
-
-
-
-
-
-
-data.wmu <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                         layer = "clip_wmu", 
-                         quiet = T)
-data.tsa <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                         layer = "tsa_outer", 
-                         quiet = T)
-
-data.wmu.moose <- merge (data.wmu, data.moose.pop, all = TRUE)
-data.wmu.moose.dns <- data.wmu.moose %>%
-                        filter (!is.na (density)) 
-data.wmu.moose.dns <- data.wmu.moose.dns [data.wmu.moose.dns$WILDLIFE_MGMT_UNIT_ID != "4-32" &
-                                          data.wmu.moose.dns$WILDLIFE_MGMT_UNIT_ID != "4-39" &
-                                          data.wmu.moose.dns$WILDLIFE_MGMT_UNIT_ID != "3-42" &
-                                          data.wmu.moose.dns$WILDLIFE_MGMT_UNIT_ID != "8-4" &
-                                          data.wmu.moose.dns$WILDLIFE_MGMT_UNIT_ID != "8-15" , ]
-data.wmu.moose.dns <- data.wmu.moose.dns [-c (5, 10, 12, 13, 17), ] # 10, 16, 18, 19, 24 
-data.wmu.moose.dns$brks_density <- cut (data.wmu.moose.dns$density, 
-                                        breaks = c (0, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 
-                                                    0.80, 0.90, 1.00, Inf), 
-                                        labels = c ("0 - 0.09", "0.10 - 0.19", "0.20 - 0.29", "0.30 - 0.39",
-                                                    "0.40 - 0.49", "0.50 - 0.59", "0.60 - 0.69", "0.70 - 0.79",
-                                                    "0.80 - 0.89", "0.90 - 1.00", ">1.00"))
-
-data.wmu.moose.dns <- cbind (data.wmu.moose.dns, st_coordinates (st_centroid (data.wmu.moose.dns)))
-
-ggplot (data = data.wmu.moose.dns) +
-        geom_sf (data = data.wmu.moose.dns, aes (fill = brks_density)) +
-        geom_sf (data = data.tsa, fill = NA) +
-        scale_fill_discrete () +
-        scale_fill_brewer (type = "div",
-                           palette = "RdBu",
-                           direction = -1,
-                           aesthetics = "fill",
-                           na.value = "orange") +
-        annotation_scale (location = "br", 
-                          width_hint = 0.5, 
-                          height = unit (0.1, "cm")) +
-        annotation_north_arrow (location = "tl", 
-                                which_north = "true", 
-                                style = north_arrow_fancy_orienteering,
-                                height = unit (1.25, "cm"),
-                                width = unit (1, "cm")) +
-        labs (fill = "Density (moose/km2)") +
-        geom_label(data = data.wmu.moose.dns, 
-                   aes(X, Y, label = density), 
-                   size = 2.5) +
-        theme (axis.title.x = element_blank(),
-               axis.title.y = element_blank())
-```
-
-
-The ratio of bull moose to cow moose is often used to indicate hunting pressure on moose populations, and a ratio of greater than 30 bulls to 100 cows is a typical management target, where populations below that indicate a heavily hunted, and potentially unstable population ( [Young and Boertje 2008](https://alcesjournal.org/index.php/alces/article/view/37); [Walker et al. 2017](http://a100.gov.bc.ca/pub/siwe/download.do?docId=34052)). 
-
-```{r, moose bull/cow ratio, fig.cap = "Figure 2. Most recent moose bull/cow ratios by wildlife management unit in the Okanagan Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
-data.moose.pop <- read.csv (file = here ("wildlife/data/okanagan/moose_density_20200504.csv"),
-                            header = T)
-data.wmu <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                         layer = "clip_wmu", 
-                         quiet = T)
-data.tsa <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                         layer = "tsa_outer", 
-                         quiet = T)
-data.wmu.moose <- merge (data.wmu, data.moose.pop, all = TRUE)
-data.wmu.moose.bc <- data.wmu.moose %>%
-                        filter (!is.na (bulls_100cows))
-### FILTER OUT PARTIAL  WMUs ###
-#### NOT 2 to 11, 32, 46 to 49, 62
-data.wmu.moose.bc.2 <- data.wmu.moose.bc [c (1, 12:31, 33:45, 50:61), ] 
-data.wmu.moose.bc.2 <- data.wmu.moose.bc.2 [c (1, 2, 8, 15, 19, 21, 24, 25, 27, 31, 32, 34, 35, 41, 45), ] 
 # get the latest number
-data.wmu.moose.bc.2$brks_bc <- cut (data.wmu.moose.bc.2$bulls_100cows, 
-                                        breaks = c (0, 15, 30, 45, 60, 75, 90, Inf), 
-                                        labels = c ("0 - 14", "15 - 29", "30 - 44", "45 - 59",
-                                                    "60 - 74", "75 - 89", ">90"))
-data.wmu.moose.bc.2 <- cbind (data.wmu.moose.bc.2, st_coordinates (st_centroid (data.wmu.moose.bc.2)))
 
-ggplot (data = data.wmu.moose.bc.2) +
-        geom_sf (data = data.wmu.moose.bc.2, aes (fill = brks_bc)) +
-        geom_sf (data = data.tsa, fill = NA) +
-        scale_fill_discrete () +
-        scale_fill_brewer (type = "div",
-                           palette = "RdBu",
-                           direction = -1,
-                           aesthetics = "fill",
-                           na.value = "orange") +
+ggplot (data = wmu) +
+        geom_sf (data = wmu, aes (fill = WILDLIFE_MGMT_UNIT_ID)) +
+        geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +        
+        scale_fill_viridis (option = "viridis", discrete = T) +
+        guides (fill = guide_legend (title = "Wildlife Management Unit")) +
         annotation_scale (location = "br", 
                           width_hint = 0.5, 
                           height = unit (0.1, "cm")) +
@@ -246,344 +104,222 @@ ggplot (data = data.wmu.moose.bc.2) +
                                 style = north_arrow_fancy_orienteering,
                                 height = unit (1.25, "cm"),
                                 width = unit (1, "cm")) +
-        labs (fill = "Bulls:100 Cows") +
-        geom_label(data = data.wmu.moose.bc.2, 
-                   aes(X, Y, label = bulls_100cows), 
-                   size = 2.5) +
-        theme (axis.title.x = element_blank(),
-               axis.title.y = element_blank())
+        labs (caption = "Kispiox TSA boundary indicated by green dashed line.")
 
 ```
 
+Moose abundance in the NWA has shown an overall decreasing trend since 2000, although with a decrease from 2001 to 2011, and increase from 2011 to 2017. Moose abundance in the Kispiox Valley has a slightly decreasing trend between 1999 and 2020, however, estimates are within 90% confidence intervals with each other, indicating the population may be stable. 
 
-The ratio of calves to cow moose is often used as an indicator of moose population trend, where ratios of 25 to 30 indicate a stable population, and ratios greater than 30 indicate an increasing population ( [FLNRORD 2019](http://www.env.gov.bc.ca/fw/wildlife/management-issues/docs/2019%20Moose%20Factsheet.pdf)). 
+```{r moose pop trend, fig.cap = "Figure 2. Moose population estimates (with 90% confidence intervals) for the Nass Wildlife Area and Kispiox Valley in the Kispiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
 
-```{r, calf/cow ratio, fig.cap = "Figure 3. Most recent moose calf/cow ratios by wildlife management unit in the Okanagan Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
-data.moose.pop <- read.csv (file = here ("wildlife/data/okanagan/moose_density_20200504.csv"),
-                            header = T)
-data.wmu <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                         layer = "clip_wmu", 
-                         quiet = T)
-data.tsa <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                         layer = "tsa_outer", 
-                         quiet = T)
-data.wmu.moose <- merge (data.wmu, data.moose.pop, all = TRUE)
-data.wmu.moose.bc <- data.wmu.moose %>%
-                        filter (!is.na (calves_100cows))
-### FILTER OUT PARTIAL  WMUs ###
-#### NOT 2 to 11, 32, 46 to 49, 62
-data.wmu.moose.bc.2 <- data.wmu.moose.bc [c (1, 12:31, 33:45, 50:61), ] 
-data.wmu.moose.bc.2 <- data.wmu.moose.bc.2 [c (1, 2, 8, 15, 19, 21, 24, 25, 27, 31, 32, 34, 35, 41, 45), ] 
-data.wmu.moose.bc.2$brks_bc <- cut (data.wmu.moose.bc.2$calves_100cows, 
-                                        breaks = c (0, 10, 20, 30, 40, 50, 60, 70, Inf), 
-                                        labels = c ("0 - 9", "10 - 19", "20 - 29", "30 - 39",
-                                                    "40 - 49", "50 - 59", "60 - 69", ">70"))
-data.wmu.moose.bc.2 <- cbind (data.wmu.moose.bc.2, st_coordinates (st_centroid (data.wmu.moose.bc.2)))
+area.labs <- c ("Nass Wildlife Area", "Kispiox Valley")
+names(area.labs) <- c("6-15/6-30", "6-8/6-9/6-15/6-30")
 
-ggplot (data = data.wmu.moose.bc.2) +
-        geom_sf (data = data.wmu.moose.bc.2, aes (fill = brks_bc)) +
-        geom_sf (data = data.tsa, fill = NA) +
-        scale_fill_discrete () +
-        scale_fill_brewer (type = "div",
-                           palette = "RdBu",
-                           direction = -1,
-                           aesthetics = "fill",
-                           na.value = "orange") +
-        annotation_scale (location = "br", 
-                          width_hint = 0.5, 
-                          height = unit (0.1, "cm")) +
-        annotation_north_arrow (location = "tl", 
-                                which_north = "true", 
-                                style = north_arrow_fancy_orienteering,
-                                height = unit (1.25, "cm"),
-                                width = unit (1, "cm")) +
-        labs (fill = "Calves:100 Cows") +
-        geom_label(data = data.wmu.moose.bc.2, 
-                   aes(X, Y, label = calves_100cows), 
-                   size = 2.5) +
-        theme (axis.title.x = element_blank(),
-               axis.title.y = element_blank())
+ggplot (data = data.moose.pop,
+        aes (x = year, y = population)) +
+  geom_point () +
+  geom_smooth (method = lm, se = F) +
+  geom_errorbar (aes (ymin = population - population_90ci, 
+                      ymax = population + population_90ci)) +
+  facet_grid (~ WILDLIFE_MGMT_UNIT_ID,
+              labeller = labeller (WILDLIFE_MGMT_UNIT_ID = area.labs)) +
+  theme_bw () +
+  theme (axis.text.x = element_text (angle = 90)) +
+  scale_y_continuous (limits = c (0, 3500),
+                      breaks = c(0, 500, 1000, 1500, 2000, 2500, 3000)) + 
+  ylab ("Population abundance") + 
+  xlab ("Year")
+
 
 ```
 
+The ratio of calves to cow moose is often used as an indicator of moose population trend, where ratios of 25 to 30 calves per 100 cows indicate a stable population, and ratios greater than 30 indicate an increasing population ([FLNRORD 2019](http://www.env.gov.bc.ca/fw/wildlife/management-issues/docs/2019%20Moose%20Factsheet.pdf)). Cow:calf ratios in the NWA and Kispiox Valley declined slightly from the early 2000's to now, but remained well above 30 calves per 100 cows.
 
+```{r moose calf:cow trend, fig.cap = "Figure 3. Moose calf:cow ratios for the Nass Wildlife Area and Kispiox Valley in the Kispiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
 
-```{r gbpu bear density, warning = F, message = F, echo = F}
+area.labs <- c ("Nass Wildlife Area", "Kispiox Valley")
+names(area.labs) <- c("6-15/6-30", "6-8/6-9/6-15/6-30")
 
-t.gbpu <- as.data.table (gbpu$POPULATION_NAME)
-setnames (t.gbpu, "POPULATION_NAME")
-t.gbpu [t.gbpu$POPULATION_NAME == "Babine", density := 23]
-t.gbpu [t.gbpu$POPULATION_NAME == "Bulkley-Lakes", density := 20]
-t.gbpu [t.gbpu$POPULATION_NAME == "Cranberry", density := 30]
-gbpu <- merge (gbpu, t.gbpu, by = "POPULATION_NAME")
+ggplot (data = data.moose.pop,
+        aes (x = year, y = calves_100cows)) +
+  geom_point () +
+  geom_smooth (method = lm, se = F) +
+  facet_grid (~ WILDLIFE_MGMT_UNIT_ID,
+              labeller = labeller (WILDLIFE_MGMT_UNIT_ID = area.labs)) +
+  theme_bw () +
+  theme (axis.text.x = element_text (angle = 90)) +
+  scale_y_continuous (limits = c (20, 80),
+                      breaks = c(20, 30, 40, 50, 60, 70, 80)) + 
+  ylab ("Calves per 100 Cows") + 
+  xlab ("Year")
 
-ggplot (data = gbpu) +
-        geom_sf (aes (fill = density)) +
-        geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +
-        #geom_sf_label (data = gbpu, aes(label = density)) +
-        xlab("Longitude") + ylab("Latitude") +
-        ggtitle ("Density of Grizzly Bears in Grizzly Bear Population Units
-Overlapping the Kispiox Timber Supply Area") +
-        scale_fill_viridis (option="plasma") +
-        guides (fill = guide_legend (title = "Density (Bears/1,000km2)")) +
-        annotation_scale(location = "br", width_hint = 0.5, pad_y = unit(-0.001, "in")) +
-        annotation_north_arrow(location = "br", which_north = "true", 
-              pad_x = unit(0, "in"), pad_y = unit(0.1, "in"),
-              style = north_arrow_fancy_orienteering) +
-        labs (caption = "Kispiox TSA boundary indicated by green dashed line.") +
-        theme (axis.text.x = element_text (angle = 30, hjust = 1))
 
 ```
 
+Hunter harvest total and effort can sometimes be used as indicators of moose population trends, where low harvest totals and high efforts indicate low moose population abundance. In the Skeena region, hunter harvest totals declined from the 1990's to 2010, but were generally correlated with the number of resident hunters, indicating the harvest decline wasn't due to moose population declines but due to a decline in hunter participation (Thiessen, 2014. Skeena Region moose harvest overview: 1976 – 2011. BC Ministry of 
+Forests, Lands and Natural Resource Operations. Smithers, BC. 57 pp.). Hunter effort increased from 2005 (~30 days/kill) to 2011 (~80 days/kill), but this increase may be due to decreasing amount of young, open forest (i.e., open sightlines), due to decreasing forest harvest in the region (H. Schindler, pers. comm.). 
 
+The ratio of bull moose to cow moose can sometimes be used to indicate hunting pressure on moose populations, and a ratio of greater than 30 bulls to 100 cows is a typical management target, where populations below that indicate a heavily hunted, and potentially unstable population ( [Young and Boertje 2008](https://alcesjournal.org/index.php/alces/article/view/37); [Walker et al. 2017](http://a100.gov.bc.ca/pub/siwe/download.do?docId=34052)). The bull:cow ratio has consistently been above this target in the NWA and Kispiox Valley, increasing slightly in both areas from the 2000's to now. 
+
+```{r moose bull:cow trend, fig.cap = "Figure 4. Moose bull:cow ratios for the Nass Wildlife Area and Kispiox Valley in the Kispiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
+
+area.labs <- c ("Nass Wildlife Area", "Kispiox Valley")
+names(area.labs) <- c("6-15/6-30", "6-8/6-9/6-15/6-30")
+
+ggplot (data = data.moose.pop,
+        aes (x = year, y = bulls_100cows)) +
+  geom_point () +
+  geom_smooth (method = lm, se = F) +
+  facet_grid (~ WILDLIFE_MGMT_UNIT_ID,
+              labeller = labeller (WILDLIFE_MGMT_UNIT_ID = area.labs)) +
+  theme_bw () +
+  theme (axis.text.x = element_text (angle = 90)) +
+  scale_y_continuous (limits = c (0, 100),
+                      breaks = c(0, 20, 40, 60, 80, 100)) + 
+  ylab ("Bulls per 100 Cows") + 
+  xlab ("Year")
+
+
+```
+
+Overall, the moose population indicators suggest that the moose population in the Kispiox TSA has been stable between 2000 to 2020.
 
 ### Roads
+Road densities are relatively low in the Kispiox TSA, with higher densities occurring in the central and southeast portions of the TSA. The Kispiox South landscape unit had the highest road density (0.52 km/km^2^), and the Suskwa and Middle Skeena South landscape units had road densities between 0.31 and 0.60 km/km^2^. 
 
-```{r, calc current road density, eval = F, echo = F, message = F, warning = F, include = F}
-data.roads <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                           layer = "union_roads_final", 
-                           quiet = T)
-data.roads <- as.data.frame (data.roads)
-data.road.length <- as.data.table (data.roads %>%
-                                    group_by (WATERSHED_FEATURE_ID) %>%
-                                    summarise (sum_length_km = sum (Length_km)))
-data.awa <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                         layer = "clip_fawa", 
-                         quiet = T)
-data.awa.roads <- merge (data.awa, data.road.length, all = TRUE)
-data.awa.roads$road_density <- data.awa.roads$sum_length_km / (data.awa.roads$AREA_HA*0.01) # ha to km2
-st_write (data.awa.roads, 
-          dsn = here ("wildlife/data/okanagan/data_awa_roads.shp"))
-```
+```{r, calc current road density, fig.cap = "Figure 5. Current road density in landscape units in the Kispiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
 
+lu$area <- st_area (lu)
+lu$area_km2 <- lu$area / 1000000
+lu$area_km2 <- units::drop_units (lu$area_km2)
 
-```{r, map current road density, fig.cap = "Figure 5. Map of current road density by freshwater assessment watershed area in the Okanagan Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
-data.awa.roads <- sf::st_read (dsn = here ("wildlife/data/okanagan/data_awa_roads.shp"),
-                               quiet = T)
-data.awa.roads$rd_dn [is.na (data.awa.roads$rd_dn)] <- 0
-data.awa.roads$brks_rd_dn <- cut (data.awa.roads$rd_dn, 
-                                  breaks = c (-0.1, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, Inf), 
-                                  labels = c ("0 - 0.19", "0.20 - 0.39", "0.40 - 0.59", "0.60 - 0.79",
-                                              "0.80 - 0.99", "1.00 - 1.19", "1.20 - 1.39", "1.40 - 1.59",
-                                              "1.60 - 1.79", "1.80 - 1.99", ">2.00"))
-ggplot (data = data.awa.roads) +
-        geom_sf (data = data.awa.roads, aes (fill = brks_rd_dn)) +
-        scale_fill_discrete () +
-        scale_fill_brewer (type = "div",
-                           palette = "RdBu",
-                           direction = -1,
-                           aesthetics = "fill",
-                           na.value = "orange") +
-        annotation_scale (location = "br", 
-                          width_hint = 0.5, 
-                          height = unit (0.1, "cm")) +
-        annotation_north_arrow (location = "tl", 
-                                which_north = "true", 
-                                style = north_arrow_fancy_orienteering,
-                                height = unit (1.25, "cm"),
-                                width = unit (1, "cm")) +
-        labs (fill = "Road Density (km/km2)") 
+lu.roads <- st_intersection (lu, roads)
 
-```
+lu.roads$length <- st_length (lu.roads)
+lu.roads$road_length_km <- lu.roads$length / 1000
+lu.roads$road_length_km <- units::drop_units (lu.roads$road_length_km)
 
+data.lu.roads <- as.data.frame (st_drop_geometry (lu.roads))
+data.lu.road.length <- as.data.table (data.lu.roads %>%
+                                        group_by (LANDSCAPE_UNIT_NAME) %>%
+                                          summarise (road_length_km = sum (road_length_km)))
+data.lu <- as.data.frame (st_drop_geometry (lu))
+data.lu.road.length <- merge (data.lu.road.length, data.lu [ , c("area_km2", "LANDSCAPE_UNIT_NAME")], by = "LANDSCAPE_UNIT_NAME", all = TRUE)
 
-```{r gbpu lu road density, warning = F, message = F, echo = F}
-lu.road.length <- st_drop_geometry (st_intersection (roads, lu) %>% 
-                                      dplyr::mutate (length_m = sf::st_length(Shape)) %>% 
-                                        dplyr::group_by (LANDSCAPE_UNIT_NAME) %>% 
-                                          dplyr::summarize (length_m = sum(length_m)))
-lu.road.length$road_length_km <- lu.road.length$length_m / 1000
-lu.road.length$road_length_km  <- units::drop_units (lu.road.length$road_length_km )
-setDT (lu.road.length) [, length_m := NULL]
-lu <- merge (lu, lu.road.length, by = "LANDSCAPE_UNIT_NAME")
-lu$area_km2 <- lu$GEOMETRY_Area / 1000000
-lu$road_dens <- lu$road_length_km / lu$area_km2
+data.lu.road.length$road_density <- data.lu.road.length$road_length_km / data.lu.road.length$area_km2
+
+data.lu.road.length$brks_rd_dn <- cut (data.lu.road.length$road_density, 
+                                        breaks = c (-Inf, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, Inf), 
+                                        labels = c ("0 - 0.09", "0.10 - 0.19", "0.20 - 0.29", "0.30 - 0.39",
+                                                    "0.40 - 0.49", "0.50 - 0.59", "0.60 - 0.69", "0.70 - 0.79",
+                                                    "0.80 - 0.89", "0.90 - 0.99", ">1.00"))
+
+lu <- merge (lu, data.lu.road.length, by = "LANDSCAPE_UNIT_NAME")
+lu$road_density [is.na(lu$road_density)] <- 0
 
 ggplot (data = lu) +
-        geom_sf (aes (fill = road_dens)) +
+        geom_sf (aes (fill = road_density)) +
         geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +
-        geom_sf (data = gbpu, fill = NA, linetype = "longdash", size = 0.9, colour = "blue") +
-        #geom_sf_label (data = gbpu, aes(label = POPULATION_NAME)) +
         xlab("Longitude") + ylab("Latitude") +
-        ggtitle ("Density of Roads in Landscape Units 
-Overlapping the Kispiox Timber Supply Area") +
+        #ggtitle ("Density of Roads in Landscape Units 
+#Overlapping the Kispiox Timber Supply Area") +
         scale_fill_viridis (option = "magma", breaks = c (0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6)) +
         guides (fill = guide_legend (title = "Road Density (km/km2)")) +
         annotation_scale(location = "br", width_hint = 0.5, pad_y = unit(-0.001, "in")) +
         annotation_north_arrow(location = "br", which_north = "true", 
               pad_x = unit(0, "in"), pad_y = unit(0.1, "in"),
               style = north_arrow_fancy_orienteering) +
-        labs (caption = "Kispiox TSA boundary indicated by green dashed line. 
-              GBPUs indicated by blue dashed line.") +
+        labs (caption = "Kispiox TSA boundary indicated by green dashed line.") +
         theme (axis.text.x = element_text (angle = 30, hjust = 1))
+
+
 ```
+
+The road density indicator does not suggest there is a strong impact of roads on moose habitat and populations in the Kispiox TSA, although roads may be having their greatest influence in east-central portions of the TSA. 
 
 ### Forest Stand Characteristics
+The percentage of forested area within a landscape unit that is 5 to 30 year old cutblocks is a useful indicator of forage availability for moose, where very low or very high proportions could indicate too little forage or too little forest cover, respectively, and thus poor habitat conditions for moose. 
 
+The southern and west-central portions of the Kispiox TSA had the highest percentage of forested area as cutblocks 5 to 30 year old. The Kispiox South landscape unit had 8% of forested area as cutblocks 5 to 30 year old and the Cranberry and Middle Skeena South landscape units had 5% forested area as cutblocks 5 to 30 year old. The northern and southern portions of the Kispiox TSA had a low percentage of forested area as cutblocks 5 to 30 year old.
 
-```{r, calc area of conifer stands >15m, eval = F, echo = F, message = F, warning = F, include = F}
-data.vri <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                         layer = "union_vri_lean", 
-                         quiet = T)
-data.vri <- as.data.frame (data.vri)
-data.area.height <- as.data.table (data.vri %>%
-                                    filter (SPECIES_CD_1 == "B" | SPECIES_CD_1 == "BA" | SPECIES_CD_1 == "BB" |
-                                            SPECIES_CD_1 == "BG" | SPECIES_CD_1 == "BL" | SPECIES_CD_1 == "BN" |
-                                            SPECIES_CD_1 == "C" | SPECIES_CD_1 == "CW" | SPECIES_CD_1 == "F" | 
-                                            SPECIES_CD_1 == "FD" | SPECIES_CD_1 == "FDC" | SPECIES_CD_1 == "FDI" | 
-                                            SPECIES_CD_1 == "H" | SPECIES_CD_1 == "HM" | SPECIES_CD_1 == "HW" | 
-                                            SPECIES_CD_1 == "HX" | SPECIES_CD_1 == "HXM" | SPECIES_CD_1 == "P" | 
-                                            SPECIES_CD_1 == "PA" | SPECIES_CD_1 == "PF" | SPECIES_CD_1 == "PJ" | 
-                                            SPECIES_CD_1 == "PL" | SPECIES_CD_1 == "PLC" | SPECIES_CD_1 == "PLI" | 
-                                            SPECIES_CD_1 == "PR" | SPECIES_CD_1 == "PW" | SPECIES_CD_1 == "PX" | 
-                                            SPECIES_CD_1 == "PXJ" | SPECIES_CD_1 == "PY" | SPECIES_CD_1 == "S" | 
-                                            SPECIES_CD_1 == "SA" | SPECIES_CD_1 == "SB" | SPECIES_CD_1 == "SE" | 
-                                            SPECIES_CD_1 == "SS" | SPECIES_CD_1 == "SW" | SPECIES_CD_1 == "SX" | 
-                                            SPECIES_CD_1 == "SXB" | SPECIES_CD_1 == "SXE" | SPECIES_CD_1 == "SXL" | 
-                                            SPECIES_CD_1 == "SXS" | SPECIES_CD_1 == "SXW" | SPECIES_CD_1 == "SXX" | 
-                                           SPECIES_CD_1 == "YC") %>%
-                                    filter (PROJ_HEIGHT_1 >= 15) %>%
-                                    filter (AREA_HA >= 5) %>%
-                                    group_by (WATERSHED_FEATURE_ID) %>%
-                                    summarise (sum_area_ha = sum (AREA_HA)))
-data.awa <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                         layer = "clip_fawa", 
-                         quiet = T)
-data.awa.height <- merge (data.awa, data.area.height, all = TRUE)
-data.awa.height$prop_moose_cover <- data.awa.height$sum_area_ha / data.awa.height$AREA_HA # proportion moose cover
-st_write (data.awa.height, 
-          dsn = here ("wildlife/data/okanagan/data_awa_cover.shp"))
-```
+It does not appear that forest harvest is occurring at high enough rates to cause a lack of older forest stands that provide cover for moose. Forestry may provide some forage habitat for moose in central portions of the Kispiox TSA, but not in northern portions of the TSA. However, these results should be considered with road density estimates, as potentially high forage value areas correspond with high road density areas. 
 
-```{r, map current forest cover, fig.cap = "Figure 6. Map of current percentage of conifer forest cover greater than 14 m tall and 5 ha patch size by freshwater assessment watershed area in the Okanagan Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
-data.awa.cover <- sf::st_read (dsn = here ("wildlife/data/okanagan/data_awa_cover.shp"),
-                               quiet = T)
-data.awa.cover$prp_ [is.na (data.awa.cover$prp_)] <- 0
-data.awa.cover$brks_prop_moose <- cut (data.awa.cover$prp_, 
-                                       breaks = c (-0.1, 0.2, 0.4, 0.6, 0.8, Inf), 
-                                       labels = c ("0 - 0.19", "0.20 - 0.39", "0.40 - 0.59", "0.60 - 0.79",
-                                                   "0.80 - 1.00"))
-ggplot (data = data.awa.cover) +
-        geom_sf (data = data.awa.cover, aes (fill = brks_prop_moose)) +
-        scale_fill_discrete () +
-        scale_fill_brewer (type = "div",
-                           palette = "RdBu",
-                           direction = -1,
-                           aesthetics = "fill",
-                           na.value = "orange") +
-        annotation_scale (location = "br", 
-                          width_hint = 0.5, 
-                          height = unit (0.1, "cm")) +
-        annotation_north_arrow (location = "tl", 
-                                which_north = "true", 
-                                style = north_arrow_fancy_orienteering,
-                                height = unit (1.25, "cm"),
-                                width = unit (1, "cm")) +
-        labs (fill = "Proportion of Conifer Cover 
-> 14m tall and 5 ha in Size") 
-```
+```{r, perc lu cutblocks 5-30 years old, fig.cap = "Figure 6. Current percentage of landscape units that are cutblocks 5 to 30 years old in the Kispiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
 
-```{r, calc area of cutblocks 5 to 30 yo, eval = F, echo = F, message = F, warning = F, include = F}
-data.cutblocks <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                               layer = "union_cutblocks", 
-                               quiet = T)
-data.cutblocks <- as.data.frame (data.cutblocks)
-data.cut.5.30 <- as.data.table (data.cutblocks %>%
-                                    filter (HARVEST_YEAR >= 1988 & HARVEST_YEAR <= 2013) %>% # cutblocks 5 to 30 yo
-                                    group_by (WATERSHED_FEATURE_ID) %>%
-                                    summarise (sum_area_ha = sum (AREA_HA)))
-data.cut.5.30 <- data.cut.5.30 [-1, ]
-data.awa <- sf::st_read (dsn = "C:\\Work\\tsr\\data\\okanagan_tsr_20200407.gdb",
-                         layer = "clip_fawa", 
-                         quiet = T)
-data.awa.cut <- merge (data.awa, data.cut.5.30, all = TRUE)
-data.awa.cut$prop_moose_food <- data.awa.cut$sum_area_ha / data.awa.cut$AREA_HA # proportion moose forage (5 to 30 yo cut)
-st_write (data.awa.cut, 
-          dsn = here ("wildlife/data/okanagan/data_awa_cut5to30.shp"))
-```
+lu <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "lu", quiet = TRUE))
+lu.cut <- st_intersection (lu, cutblocks)
+lu.cut$area <- st_area (lu.cut)
+lu.cut$area_km2 <- lu.cut$area / 1000000
+lu.cut$area_km2 <- units::drop_units (lu.cut$area_km2)
 
-```{r, map cutblocks 5 to 30 yo, fig.cap = "Figure 7. Map of proportion of area of cutblocks 5 to 30 years old by freshwater assessment watershed area in the Okanagan Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
-data.awa.cut <- sf::st_read (dsn = here ("wildlife/data/okanagan/data_awa_cut5to30.shp"),
-                             quiet = T)
-data.awa.cut$prp__ [is.na (data.awa.cut$prp__)] <- 0
-data.awa.cut$brks_prop_cut <- cut (data.awa.cut$prp__, 
-                                     breaks = c (-0.1, 0.2, 0.4, 0.6, 0.8, 1), 
-                                     labels = c ("0 - 0.19", "0.20 - 0.39", "0.40 - 0.59", "0.60 - 0.79", 
-                                                 "0.80 - 1.00"))
-ggplot (data = data.awa.cut, aes (fill = brks_prop_cut)) +
-        geom_sf (data = data.awa.cut, aes (fill = brks_prop_cut)) +
-       # scale_fill_discrete () +
-        scale_fill_brewer (type = "div",
-                           palette = "RdBu",
-                           direction = -1,
-                           aesthetics = "fill",
-                           na.value = "orange") +
-        annotation_scale (location = "br", 
-                          width_hint = 0.5, 
-                          height = unit (0.1, "cm")) +
-        annotation_north_arrow (location = "tl", 
-                                which_north = "true", 
-                                style = north_arrow_fancy_orienteering,
-                                height = unit (1.25, "cm"),
-                                width = unit (1, "cm")) +
-        labs (fill = "Proportion of 5 to 30 year 
-old cutblocks") 
-```
+data.lu.cut <- as.data.frame (st_drop_geometry (lu.cut))
+data.lu.cut.area <- as.data.table (data.lu.cut %>%
+                                        group_by (LANDSCAPE_UNIT_NAME) %>%
+                                          filter (HARVEST_YEAR > 1989 & HARVEST_YEAR < 2015) %>%
+                                          summarise (cut_area_km2 = sum (area_km2)))
 
-```{r gbpu lu mid-seral, warning = F, message = F, echo = F}
+lu$area <- st_area (lu)
+lu$area_km2 <- lu$area / 1000000
+lu$area_km2 <- units::drop_units (lu$area_km2)
+data.lu <- as.data.frame (st_drop_geometry (lu))
+data.lu.cut.area <- merge (data.lu.cut.area, data.lu [ , c("area_km2", "LANDSCAPE_UNIT_NAME")], by = "LANDSCAPE_UNIT_NAME", all = T)
+data.lu.cut.area$cut_perc_forest [ is.na (data.lu.cut.area$cut_perc_forest)] <- 0
 
-# data was obtained from VRI - BCLCS_LEVEL_1 = 'V' AND BCLCS_LEVEL_2 = 'T' AND BCLCS_LEVEL_4 = 'TC' AND BEC_ZONE_CODE = 'CWH' OR BEC_ZONE_CODE = 'ICH' OR BEC_ZONE_CODE = 'SBS' AND PROJ_AGE_1 > 40 AND PROJ_AGE_1 < 100
+# area that is forested
+lu.vri <- st_intersection (lu, vri)
+lu.vri$poly_area <- st_area (lu.vri)
+lu.vri$poly_area_km2 <- lu.vri$poly_area / 1000000
+lu.vri$poly_area_km2 <- units::drop_units (lu.vri$poly_area_km2)
 
-area.mid.seral.lu <- st_drop_geometry (st_intersection (mid.seral, lu) %>% 
-                                         dplyr::mutate (area_m2 = sf::st_area(GEOMETRY)) %>% 
-                                           dplyr::group_by (LANDSCAPE_UNIT_NAME) %>% 
-                                            dplyr::summarize (mid_seral_area_ha = sum (units::drop_units (area_m2) * 0.0001)))
-area.bec.lu <- st_drop_geometry (st_intersection (bec, lu) %>% 
-                                    dplyr::filter (ZONE == 'CWH' | ZONE == 'ICH' | ZONE == 'SBS') %>%     
-                                        dplyr::mutate (area_m2 = sf::st_area(GEOMETRY)) %>%    
-                                         dplyr::group_by (LANDSCAPE_UNIT_NAME) %>% 
-                                          dplyr::summarize (bec_area_ha = sum (units::drop_units (area_m2) * 0.0001)))
-#area.bec.lu$bec_area_ha <- area.bec.lu$bec_area_m2 * 0.0001 
-area.mid.seral.lu <- merge (area.mid.seral.lu, area.bec.lu, by = c ("LANDSCAPE_UNIT_NAME"))
+data.lu.vri <- as.data.table (st_drop_geometry (lu.vri))
 
-area.mid.seral.lu$perc_mid_seral <- (area.mid.seral.lu$mid_seral_area_ha / area.mid.seral.lu$bec_area_ha) * 100
+data.forest.area <- data.lu.vri %>%
+                     group_by (LANDSCAPE_UNIT_NAME) %>%
+                      filter (BCLCS_LEVEL_1 == "V" & BCLCS_LEVEL_2 == "T" & 
+                              BCLCS_LEVEL_4 == "TC" | BCLCS_LEVEL_4 =="TB" |
+                              BCLCS_LEVEL_4 =="TM") %>%
+                        summarise (forested_area_km2 = sum (poly_area_km2))
 
-lu <-  merge (lu, area.mid.seral.lu,  by = "LANDSCAPE_UNIT_NAME")
+data.lu.cut.forest.area <- merge (data.lu.cut.area, data.forest.area, by = "LANDSCAPE_UNIT_NAME")
+data.lu.cut.forest.area$cut_perc_forest <- (data.lu.cut.forest.area$cut_area_km2 / data.lu.cut.forest.area$forested_area_km2) * 100
+
+lu <- merge (lu, data.lu.cut.forest.area, by = "LANDSCAPE_UNIT_NAME", all = T)
+lu$cut_perc_forest [ is.na (lu$cut_perc_forest)] <- 0
 
 ggplot (data = lu) +
-        geom_sf (aes (fill = perc_mid_seral)) +
+        geom_sf (aes (fill = cut_perc_forest)) +
         geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +
-        geom_sf (data = gbpu, fill = NA, linetype = "longdash", size = 0.9, colour = "blue") +
-        #geom_sf_label (data = gbpu, aes(label = POPULATION_NAME)) +
         xlab("Longitude") + ylab("Latitude") +
-        ggtitle ("Percent Mid-Seral CWH, ICH and SBS 
-Conifer Forest in Landscape Units Overlapping 
-the Kispiox Timber Supply Area") +
+        #ggtitle ("Percent of Forested Area that are Cutblocks
+#5 to 30 years old in Landscape Units
+#Overlapping the Kispiox Timber Supply Area") +
         scale_fill_viridis (option = "magma", breaks = c (0, 1, 2, 4, 5, 6, 7, 8)) +
-        guides (fill = guide_legend (title = "Percent (%) Mid-Seral")) +
+        guides (fill = guide_legend (title = "Percent (%) Cutblocks")) +
         annotation_scale(location = "br", width_hint = 0.5, pad_y = unit(-0.001, "in")) +
         annotation_north_arrow(location = "br", which_north = "true", 
               pad_x = unit(0, "in"), pad_y = unit(0.1, "in"),
               style = north_arrow_fancy_orienteering) +
-        labs (caption = "Kispiox TSA boundary indicated by green dashed line. 
-              GBPUs indicated by blue dashed line.") +
+        labs (caption = "Kispiox TSA boundary indicated by green dashed line.") +
         theme (axis.text.x = element_text (angle = 30, hjust = 1))
 ```
 
 ## Future Conditions
 - analyze outputs from timber supply models, if/when available
 
-### Alternate Forest Management Regimes for Grizzly Bear
+### Alternate Forest Management Regimes for Moose
 - is there a moose focused scenario we could analyze?
 
 ### Roads
+- future road densities, at 10 years intervals
 
 ### Forest Stand Characteristics
+- future proportion of 5 to 30 year old cutblocks
 
 ### Timber Supply
+- comparison of timber supply between base case and 'moose case'
 
-## Mitigating Potential Impacts of Forest Harvest to Grizzly Bear
-
+## Mitigating Potential Impacts of Forest Harvest to Moose
+Impacts to moose from forestry may be mitigated by limiting road building and deactivating and restoring roads that are built, and maintaining a rate of forest harvest that sustains a steady proportion of age 5 to 30 year old cutblocks in the forested area. It's not known what road density is too high, or what proportion of age 5 to 30 year old stands is ideal for moose populations in the region. However, it appears that recent levels of forest harvest and road density have not been significantly limiting moose populations. Forest management regimes that may cause a significant deviation from current conditions could be risky for moose population sustainability and should be evaluated with careful monitoring of moose habitat and populations.  
 
 ## Uncertainties and Limitations 
-
+The relationship between road density, young forest and moose population dynamics is not clear. These relationships vary across BC, and there are no known habitat thresholds defined for the Skeena region. Within the region, it's not known how road density or vegetation composition (particularly moose forage) post-forest harvest influences moose survival and abundance. Additional research and monitoring of moose populations in response to forestry would significantly improve our understanding of how forestry influences moose in the region.
