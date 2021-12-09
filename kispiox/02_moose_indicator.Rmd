@@ -38,8 +38,7 @@ Moose are not legally listed by the Canadian government and their conservation s
 ### Provincial Status
 In British Columbia, moose are [*yellow listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), meaning they are  apparently secure and not at risk of extinction. They have an [S5](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are demonstrably widespread, abundant, and secure.
 
-In the early 2010's it became apparent that moose populations were declining in central portions of the province. In response, a provincial moose management strategy was created to provide provincial
-direction for moose management and
+In the early 2010's it became apparent that moose populations were declining in central portions of the province. In response, a provincial moose management strategy was created to provide provincial direction for moose management and
 establish a scientific basis for making moose management decisions ([FLNRORD 2015](https://www.env.gov.bc.ca/fw/wildlife/management-issues/docs/provincial_framework_for_moose_management_bc.pdf)). In addition, in 2013 the provincial government initiated a provincial research program focused on improving understanding of factors driving moose populations.
 
 ### First Nations Status
@@ -90,7 +89,6 @@ Moose surveys were completed in the Nass Wildlife Area (NWA), which overlaps wes
 
 
 # get the latest number
-
 ggplot (data = wmu) +
         geom_sf (data = wmu, aes (fill = WILDLIFE_MGMT_UNIT_ID)) +
         geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +        
