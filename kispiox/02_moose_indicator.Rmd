@@ -32,16 +32,16 @@ data.moose.pop <- read.csv (file = here ("data/kispiox/moose_density_20211125.cs
 ## Background
 Moose (*Alces alces*) are the largest ungulate species in British Columbia, and are widely distributed throughout the interior of the province (see [Moose In British Columbia](http://www.env.gov.bc.ca/wld/documents/moose.pdf)). They are a highly valued wildlife species across North America for a variety of cultural and economic reasons ([Timmermann and Rogers 2005](https://pdfs.semanticscholar.org/55d2/86e83dd7cae6da270c153858b3d1a98d89de.pdf)). 
 
-### Federal Status
+### Importance to the Canadian Government
 Moose are not legally listed by the Canadian government and their conservation status has not been assessed by the Committee on the Status of Endangered Wildlife in Canada (COSEWIC). Across North America, moose abundance was recently estimated at approximately 1,000,000 animals, with approximately 1/3 of jurisdictions with increasing populations, 1/3 with decreasing populations and 1/3 with stable populations ([Timmermann and Rodgers 2017](https://alcesjournal.org/index.php/alces/article/download/177/248/1392)).
 
-### Provincial Status
+### Importance to the British Columbian Government
 In British Columbia, moose are [*yellow listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), meaning they are  apparently secure and not at risk of extinction. They have an [S5](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are demonstrably widespread, abundant, and secure.
 
 In the early 2010's it became apparent that moose populations were declining in central portions of the province. In response, a provincial moose management strategy was created to provide provincial direction for moose management and
 establish a scientific basis for making moose management decisions ([FLNRORD 2015](https://www.env.gov.bc.ca/fw/wildlife/management-issues/docs/provincial_framework_for_moose_management_bc.pdf)). In addition, in 2013 the provincial government initiated a provincial research program focused on improving understanding of factors driving moose populations.
 
-### First Nations Status
+### Importance to First Nations Governments
 Moose are a highly valued wildlife species to many First Nations communities in British Columbia. Prior to European colonization, moose were used extensively by Indigenous peoples for food, clothing and shelter (see [Moose In British Columbia](http://www.env.gov.bc.ca/wld/documents/moose.pdf)). In the last 100 years, moose have become an important, nutritious, staple food of many interior and coastal First Nations communities in British Columbia ([First Nations Health Authority fact sheet](https://www.fnha.ca/Documents/Traditional_Food_Fact_Sheets.pdf)). The Gitanyow community has identified moose (*Ha daa*) as the most important wildlife species in terms of consumptive demand, as they provide important sustenance during the winter months (see Hamelin, 2003. Seasonal Movements and Distribution Patterns of Moose (*Alces alces*) within the Kitwanga Watershed). 
 
 ## Relationship to Forestry
@@ -305,7 +305,7 @@ ggplot (data = lu) +
 - analyze outputs from timber supply models, if/when available
 
 ### Alternate Forest Management Regimes for Moose
-- is there a moose focused scenario we could analyze?
+- scenario that includes proposed draft moose UWR and general wildlife measures
 
 ### Roads
 - future road densities, at 10 years intervals
@@ -317,7 +317,7 @@ ggplot (data = lu) +
 - comparison of timber supply between base case and 'moose case'
 
 ## Mitigating Potential Impacts of Forest Harvest to Moose
-Impacts to moose from forestry may be mitigated by limiting road building and deactivating and restoring roads that are built, and maintaining a rate of forest harvest that sustains a steady proportion of age 5 to 30 year old cutblocks in the forested area. It's not known what road density is too high, or what proportion of age 5 to 30 year old stands is ideal for moose populations in the region. However, it appears that recent levels of forest harvest and road density have not been significantly limiting moose populations. Forest management regimes that may cause a significant deviation from current conditions could be risky for moose population sustainability and should be evaluated with careful monitoring of moose habitat and populations.  
+Impacts to moose from forestry may be mitigated by limiting road building and deactivating and restoring roads that are built, and maintaining a rate of forest harvest that sustains a steady proportion of age 5 to 30 year old cutblocks in the forested area. It's not known what road density is too high, or what proportion of age 5 to 30 year old stands is ideal for moose populations in the region. However, it appears that recent levels of forest harvest and road density have not been significantly limiting moose populations across the TSA. Forest management regimes that may cause a significant deviation from current conditions could be risky for moose population sustainability and should be evaluated with careful monitoring of moose habitat and populations. In addition, localized concentratations of forest harvest activities 
 
 ## Uncertainties and Limitations 
 The relationship between road density, young forest and moose population dynamics is not clear. These relationships vary across BC, and there are no known habitat thresholds defined for the Skeena region. Within the region, it's not known how road density or vegetation composition (particularly moose forage) post-forest harvest influences moose survival and abundance. Additional research and monitoring of moose populations in response to forestry would significantly improve our understanding of how forestry influences moose in the region.

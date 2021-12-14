@@ -29,36 +29,71 @@ data.moose.pop <- read.csv (file = here ("data/kispiox/moose_density_20211125.cs
                             header = T)
 ```
 
-## Background
-interior subspecies of northern goshawk (Accipiter gentilis atricapillus) 
 
-declined severely in the past few years in the Skeena Region ( Eamer, J. 2018. Action plan for recovery and conservation of interior northern goshawks in the Skeena Region: Background and framework. Prepared for Ministry of Forests, Lands, Natural
+
+
+-  hexagon represents a potential 2400 hectare forage territory. Within forage territories are smaller hexagons which represents potential 100 ha breeding areas 
+- Breeding areas need to have a minimum of 70% mature and old forests conditions.
+
+
+## Background
+medium sized forest raptor
+
+likely mostly interior subspecies of northern goshawk (Accipiter gentilis atricapillus) in th eKispiox TSA; might rarely be soem coastal subspecies (Accipiter gentilis laingi) in the 'tiransitionm zone' in southwest portion of the TSA
+
+live year-round in the Skeena region
+
+hunt small mammals and birds in mature adn old forest (>80 year old) stands; in Skeena tehy prey on snowshoe hare, and thus popautliosn may fucatuate with snowshoe hare cycle
+
+territorial and use same breeding areas year after year
+
+declined severely in the past few years in the Skeena Region 
+
+above from ( Eamer, J. 2018. Action plan for recovery and conservation of interior northern goshawks in the Skeena Region: Background and framework. Prepared for Ministry of Forests, Lands, Natural
 Resource Operations and Rural Development, Skeena Region. Smithers BC. )
 
+- high fidelity to nest sites year after year (Mahon 2009)
 
 
-### Federal Status
+### Importance to the Canadian Government
+The interior subspecies was assessed in 1995 as *['Not at Risk'](https://species-registry.canada.ca/index-en.html#/species/373-0)* by Committee on the Status of Endangered Wildlife in Canada (COSEWIC). They are not listed under the *Species at Risk Act* (SARA).
+
+The coastal subspecies as assessed in 2013 as *['Threatened'](https://species-registry.canada.ca/index-en.html#/species/56-45)* by COSEWIC and listed as *"Threhtened'* (i.e., likely to become Threatened if nothing is done to reverse the factors leading to their extirpation or extinction) under [SARA](https://wildlife-species.canada.ca/species-risk-registry/species/speciesDetails_e.cfm?sid=56).
+
+### Importance to the British Columbian Government
+In British Columbia, interior northern goshawk are [*blue listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), meaning they are at risk, but not extirpated, endangered or threatened. They have an [S3S4](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are somewhere between apparently secure and vulnerable due to a restricted range, relatively few populations, recent and widespread declines, or other factors.
+
+The coastal subspecies re [*red listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), i.e., candidates for, Extirpated, Endangered, or Threatened status in British Columbia. They have an [S3S4](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are imperiled.
 
 
-### Provincial Status
-In British Columbia, interiro northern goshawk are [*blue listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), meaning they are at risk, but not extirpated, endangered or threatened. They have an [S3S$](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are siomehwer between apparently secure and vulnerable due to a restricted range, relatively few populations, recent and widespread declines, or other factors.
+ High Risk in the Skeena Region; developed an Action Plan for Recovery and Conservation in 2018, which included immediate actions to halt the decline adn prevent the spp. form becvomign endangered or extiprated form teh area (Eamer 2018). For exmapel, this inlcuded consrvign new breedign areas adn known terriorties
+ 
+ in Skeena region; set goal of achieving  a minimum level of 100 intact territories per TSA ( Doyle, F.I., A. Coosemans, and L. Rach. 2017. Northern Goshawk (Accipiter gentilis ssp.
+atricapillus) Management Strategy for the Skeena Region; March 2017. British Columbia
+Ministry Forests, Lands, and Natural Resource Operations. Smithers, BC. Pp 1-36)
 
+currently no formal protection for interior goshawks in Skeena region; working on listing them as Regionally Important Wildlife (RIW) to allow for  GAR protections;  at minimum 6 months away, if approved.
 
- High Risk in the Skeena Region (Eamer 2008)
+- he Skeena Goshawk Stabilization Project (initiated in 2017
 
-### First Nations Status
-
-
+### Importance to First Nations Governments
+- -	First Nations have expressed interest in preserving goshawk, however, goshawk are not as high priority as other values
 
 
 ## Relationship to Forestry
-
-
-### Roads
+- key goshawk habitat is mature and old-growth coniferous forest stands that provide closed canopies and open understories (Eamer 2018), and thus forest harvest can be a threat to goshawk habtiat
+- need to maitnain mature to old (>80 year old) forest intact within 100m of nay nest sites
+- highly sensitive to forestry; loss of habitat
+- mountain pine beetle also a likely sifgnifcant caue fo habitat loss, by killign large confier trees, reducing canopy closure (Doyle 2014)
+- may ne imprtoant to limtiing the size of small mamlla popautlions that coudl damage vegetatiob, includign seedlings (Doyle 2015)
 
 
 
 ### Forest Stand Characteristics
+
+need 2400 ha patches with > 70% mature to old (>80 year old) forest (EAmer 2018); conventional harvest in  <30% of the foraging area and partial harvests in <30% of the remaining 70% of area
+- 'core of 100 ha of breedign habtiat surrocunded by >30-50% mature forest (Doyle 2015. Occupancy and Status of Northern Goshawk Breeding Areas in the Coast Mountains (Kalum), Nadina and Skeena Stikine Resource Districts)
+- two-thirds of theforested landscape in mature forest condition and approximately one-third in early seral herb/shrub (plus some pole sapling), may represent a near optimal distribution for goshawk foraging suitability;   As the proportion of mature forest decreases (especially below 25% of the landscape) and the proportion of mid seral and young forest stages increase, it is likely that goshawk densities will decrease. (Mahon 2009. Northern Goshawks in West-Central British Columbia 10-Year Project Summary )
 
 
 
@@ -68,16 +103,21 @@ In British Columbia, interiro northern goshawk are [*blue listed*](https://www2.
 
 
 ### Population Status and Trend
-
-
-
-
-### Roads
-
-
+- in Skeena region occupancy of approximatelt 100 known nest sites has decreased substianlly since the early 2000,'s from approximately 70% occupancy to approximately 25% occupancy in the mid-2000's to approximately 10% in teh mid-2010's (Eamer 2018)
+- Goshawks have abandoned 95% of previously known territories and only 19% of confirmed territories in the Skeena Region remain intact (Eamer 2018)
+- Habitat loss and degradation appear to be the primary causes of regional population declines.  (Doyle at al. 2017)
+- 17 active breedign aras of 129 confirmed breedign areas in 2014 (Doyle at al. 2017) 
+- re-surveyd 33 known breedign sites in Nadina district 2014; only 4 were occupied (Doyle 2014. Post Mountain Pine Beetle the Status of Northern Goshawk Breeding Areas in the Nadina Resource District)
+- in 2015, re-surveyed 72 breeding areas in Kalum, Nadina and Skeena-Sitkine, and found only 2 occupied; 16 of 45 breedin sites in Nadian were harvested  (Doyle2015)
+- 115 known breeding areas across Kalum, Nadina and Skeena-Sitkine districts, 25% meeting habitat requirements and 29% harvested (Doyle 2015)
+-  From 1998  to 2007, average annual occupancy of >20 nest s declined from 72% to 26%; magnitude of change is similar between the SBS and ICH suggesting that the cause of the decline is not related to the epidemic MPB infestation (Mahon 2009)
 
 
 ### Forest Stand Characteristics
+
+
+
+
 
 
 ## Future Conditions
@@ -86,8 +126,7 @@ In British Columbia, interiro northern goshawk are [*blue listed*](https://www2.
 ### Alternate Forest Management Regimes for Moose
 - is there a moose focused scenario we could analyze?
 
-### Roads
-- future road densities, at 10 years intervals
+
 
 ### Forest Stand Characteristics
 - future proportion of 5 to 30 year old cutblocks
@@ -96,8 +135,12 @@ In British Columbia, interiro northern goshawk are [*blue listed*](https://www2.
 - comparison of timber supply between base case and 'moose case'
 
 ## Mitigating Potential Impacts of Forest Harvest to Moose
+- currently mamaged under BMPs to protected nestin sites (100 ha buffer), but doesnt; necessariyl portect foraging area aroudj them (2400 ha); disensntive to report adn protect nest (Eamer 2018); need to insentivize 
 
+- AAC determination can be used as a tool to set aside habitat targets for goshawk territory requirements (Doyle at al. 2017) 
 
+-maitaian habtait to support as alrge a popautlion as possible; resilient to climate change impacts (Douyle 2015)
 
+- anticipate >100 territories can be managed with NO impact on timber supply  (over the next 20 years) in the Mroice TSA. 
 
 ## Uncertainties and Limitations 
