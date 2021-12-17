@@ -21,7 +21,7 @@ tsa_bound <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), 
 cutblocks <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "cutblocks"))
 vri <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "vri"))
 wmu <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "wmu"))
-roads <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "roads_dra_ften"))
+roads <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "roads_ce"))
 lu <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "lu"))
 bec <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "bec"))
 mid.seral <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "mid_seral"))
@@ -183,7 +183,7 @@ ggplot (data = data.moose.pop,
 Overall, the moose population indicators suggest that the moose population in the Kispiox TSA has been stable between 2000 to 2020.
 
 ### Roads
-Road densities are relatively low in the Kispiox TSA, with higher densities occurring in the central and southeast portions of the TSA. The Kispiox South landscape unit had the highest road density (0.52 km/km^2^), and the Suskwa and Middle Skeena South landscape units had road densities between 0.31 and 0.60 km/km^2^. 
+Road densities are relatively high in the Kispiox TSA, with 6 of the 10 landscape untis havign road densitives greater than 0.6 km/km^2. Higher densities occurred in the central and southeast portions of the TSA. The Kispiox South landscape unit had the highest road density (1.34 km/km^2^), and the Suskwa, Middle Skeena South, Cranberry, Gitsegukla and Lower Skeena landscape units had road densities greater than 0.60 km/km^2^. Thus, road densities in the central and southern portions of the Kispiox TSA potentially present a risk for moose, and roads may be having their greatest influence in east-central portions of the TSA. 
 
 ```{r, calc current road density, fig.cap = "Figure 5. Current road density in landscape units in the Kispiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
 
@@ -207,10 +207,10 @@ data.lu.road.length <- merge (data.lu.road.length, data.lu [ , c("area_km2", "LA
 data.lu.road.length$road_density <- data.lu.road.length$road_length_km / data.lu.road.length$area_km2
 
 data.lu.road.length$brks_rd_dn <- cut (data.lu.road.length$road_density, 
-                                        breaks = c (-Inf, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, Inf), 
-                                        labels = c ("0 - 0.09", "0.10 - 0.19", "0.20 - 0.29", "0.30 - 0.39",
-                                                    "0.40 - 0.49", "0.50 - 0.59", "0.60 - 0.69", "0.70 - 0.79",
-                                                    "0.80 - 0.89", "0.90 - 0.99", ">1.00"))
+                                        breaks = c (-Inf, 0.2, 0.4, 0.6, 0.8, 1, 1.2, Inf), 
+                                        labels = c ("0 - 0.19", "0.20 - 0.39", "0.40 - 0.59", 
+                                                    "0.60 - 0.79", "0.80 - 0.99", 
+                                                    "1.00 - 1.19", "1.20 - 1.39"))
 
 lu <- merge (lu, data.lu.road.length, by = "LANDSCAPE_UNIT_NAME")
 lu$road_density [is.na(lu$road_density)] <- 0
@@ -221,7 +221,7 @@ ggplot (data = lu) +
         xlab("Longitude") + ylab("Latitude") +
         #ggtitle ("Density of Roads in Landscape Units 
 #Overlapping the Kispiox Timber Supply Area") +
-        scale_fill_viridis (option = "magma", breaks = c (0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6)) +
+        scale_fill_viridis (option = "magma", breaks = c (0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2)) +
         guides (fill = guide_legend (title = "Road Density (km/km2)")) +
         annotation_scale(location = "br", width_hint = 0.5, pad_y = unit(-0.001, "in")) +
         annotation_north_arrow(location = "br", which_north = "true", 
@@ -229,11 +229,7 @@ ggplot (data = lu) +
               style = north_arrow_fancy_orienteering) +
         labs (caption = "Kispiox TSA boundary indicated by green dashed line.") +
         theme (axis.text.x = element_text (angle = 30, hjust = 1))
-
-
 ```
-
-The road density indicator does not suggest there is a strong impact of roads on moose habitat and populations in the Kispiox TSA, although roads may be having their greatest influence in east-central portions of the TSA. 
 
 ### Forest Stand Characteristics
 The percentage of forested area within a landscape unit that is 5 to 30 year old cutblocks is a useful indicator of forage availability for moose, where very low or very high proportions could indicate too little forage or too little forest cover, respectively, and thus poor habitat conditions for moose. 
