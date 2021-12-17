@@ -112,7 +112,7 @@ Overlapping the Kispiox Timber Supply Area") +
 Adult female grizzly bear mortality rates are relatively low (<2%) in the GBPUs that overlap the Kispiox TSA, but mortality rates are relatively high (2-3%) in some LUs in the Babine GBPU, in the southeast portion of the Kispiox TSA. However, these data pre-date the recent provincial ban on grizzly bear hunting, which made up 72% of mortalities in the region. 
 
 ### Roads
-Road densities are relatively high in the Kispiox TSA, with 6 of the 10 landscape untis havign road densitives greater than 0.6 km/km^2. Higher densities occurred in the central and southeast portions of the TSA. The Kispiox South landscape unit had the highest road density (1.34 km/km^2^), and the Suskwa, Middle Skeena South, Cranberry, Gitsegukla and Lower Skeena landscape units had road densities greater than 0.60 km/km^2^. Thus, road densities in the central and southern portions of the Kispiox TSA present a high risk for grizzly bear.
+Road densities are relatively high in the Kispiox TSA, with 6 of the 10 landscape units having road densities greater than 0.6 km/km^2. Higher densities occurred in the central and southeast portions of the TSA. The Kispiox South landscape unit had the highest road density (1.34 km/km^2^), and the Suskwa, Middle Skeena South, Cranberry, Gitsegukla and Lower Skeena landscape units had road densities greater than 0.60 km/km^2^. Thus, road densities in the central and southern portions of the Kispiox TSA present a high risk for grizzly bear.
 
 ```{r gbpu lu road density, warning = F, message = F, echo = F}
 lu.road.length <- st_drop_geometry (st_intersection (roads, lu) %>% 
