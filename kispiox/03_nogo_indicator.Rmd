@@ -5,7 +5,7 @@ date: "8/12/2021"
 output: html_document
 ---
 
-```{r setup and data, include=FALSE}
+```{r setup and data, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library (here)
 library (ggplot2)
@@ -17,132 +17,162 @@ library (ggrepel)
 library (ggspatial)
 library (units)
 
-tsa_bound <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "tsa_bound"))
-cutblocks <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "cutblocks"))
-vri <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "vri"))
-wmu <- st_make_valid (sf::st_read(here ("data/kispiox/kispiox_2021.gdb"), layer = "wmu"))
+tsa_bound <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "tsa_bound"))
+cutblocks <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "cutblocks"))
+vri <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "vri"))
 roads <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "roads_dra_ften"))
 lu <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "lu"))
-bec <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "bec"))
-mid.seral <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "mid_seral"))
-data.moose.pop <- read.csv (file = here ("data/kispiox/moose_density_20211125.csv"),
-                            header = T)
+nogo_terr <- st_make_valid (st_cast (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "nogo_territories"), "MULTIPOLYGON"))
+nogo_rge <- st_make_valid (sf::st_read (here ("data/kispiox/kispiox_2021.gdb"), layer = "nogo_range_kispioxtsa"))
+
 ```
 
-
-
-
--  hexagon represents a potential 2400 hectare forage territory. Within forage territories are smaller hexagons which represents potential 100 ha breeding areas 
-- Breeding areas need to have a minimum of 70% mature and old forests conditions.
-
-
 ## Background
-medium sized forest raptor
+Northern goshawk are a medium-sized raptor that live year-round in the Skeena region. They live in mature and old (>80 year old) forest stands, where they prey on small mammals and birds (*Eamer, J. 2018. Action plan for recovery and conservation of interior northern goshawks in the Skeena Region: Background and framework. Prepared for Ministry of Forests, Lands, Natural Resource Operations and Rural Development, Skeena Region. Smithers BC.*). They are territorial and have a high fidelity to nest sites, and thus a breeding pair will use the same breeding and foraging areas year-after-year (Mahon 2009). 
 
-likely mostly interior subspecies of northern goshawk (Accipiter gentilis atricapillus) in th eKispiox TSA; might rarely be soem coastal subspecies (Accipiter gentilis laingi) in the 'tiransitionm zone' in southwest portion of the TSA
+There are two subspecies of northern goshawk in British Columbia, the interior subspecies (*Accipiter gentilis atricapillus*) and the coastal subspecies (*Accipiter gentilis laingi*). Both subspecies could occur within the Kispiox TSA, however, the range of the interior subspecies overlaps the majority of the Kispiox TSA, and a 'transition zone' where both subspecies' range overlap, covers the southwest portion of the TSA.
 
-live year-round in the Skeena region
+```{r, nogo range, fig.cap = "Figure 1. Northern Goshawk Range Overlap with the Kipsiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
 
-hunt small mammals and birds in mature adn old forest (>80 year old) stands; in Skeena tehy prey on snowshoe hare, and thus popautliosn may fucatuate with snowshoe hare cycle
 
-territorial and use same breeding areas year after year
+ggplot (data = nogo_rge) +
+        geom_sf (data = nogo_rge, aes (fill = ADMIN_AREA)) +
+        geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +              scale_fill_viridis (option = "viridis", 
+                            discrete = T,
+                            labels = c("Interior Subspecies", "Transition Zone")) +
+        guides (fill = guide_legend (title = "Subspecies Range")) +
+        annotation_scale (location = "br", 
+                          width_hint = 0.5, 
+                          height = unit (0.1, "cm")) +
+        annotation_north_arrow (location = "tl", 
+                                which_north = "true", 
+                                style = north_arrow_fancy_orienteering,
+                                height = unit (1.25, "cm"),
+                                width = unit (1, "cm")) +
+        labs (caption = "Kispiox TSA boundary indicated by green dashed line.")
 
-declined severely in the past few years in the Skeena Region 
 
-above from ( Eamer, J. 2018. Action plan for recovery and conservation of interior northern goshawks in the Skeena Region: Background and framework. Prepared for Ministry of Forests, Lands, Natural
-Resource Operations and Rural Development, Skeena Region. Smithers BC. )
-
-- high fidelity to nest sites year after year (Mahon 2009)
-
+```
 
 ### Importance to the Canadian Government
-The interior subspecies was assessed in 1995 as *['Not at Risk'](https://species-registry.canada.ca/index-en.html#/species/373-0)* by Committee on the Status of Endangered Wildlife in Canada (COSEWIC). They are not listed under the *Species at Risk Act* (SARA).
+The interior northern goshawk subspecies was assessed in 1995 as *['Not at Risk'](https://species-registry.canada.ca/index-en.html#/species/373-0)* by the Committee on the Status of Endangered Wildlife in Canada (COSEWIC). They are not listed under the *Species at Risk Act* (SARA).
 
-The coastal subspecies as assessed in 2013 as *['Threatened'](https://species-registry.canada.ca/index-en.html#/species/56-45)* by COSEWIC and listed as *"Threhtened'* (i.e., likely to become Threatened if nothing is done to reverse the factors leading to their extirpation or extinction) under [SARA](https://wildlife-species.canada.ca/species-risk-registry/species/speciesDetails_e.cfm?sid=56).
+The coastal subspecies was assessed in 2013 as *['Threatened'](https://species-registry.canada.ca/index-en.html#/species/56-45)* by COSEWIC, and listed as *"Threatened'* (i.e., likely to become endangered if nothing is done to reverse the factors leading to their extirpation or extinction) under [SARA](https://wildlife-species.canada.ca/species-risk-registry/species/speciesDetails_e.cfm?sid=56).
 
 ### Importance to the British Columbian Government
-In British Columbia, interior northern goshawk are [*blue listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), meaning they are at risk, but not extirpated, endangered or threatened. They have an [S3S4](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are somewhere between apparently secure and vulnerable due to a restricted range, relatively few populations, recent and widespread declines, or other factors.
+In British Columbia, interior northern goshawk are [*blue listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), meaning they are at risk, but not extirpated, endangered or threatened. They have an [S3S4](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are somewhere between 'apparently secure' and 'vulnerable due to a restricted range, relatively few populations, recent and widespread declines, or other factors'.
 
-The coastal subspecies re [*red listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), i.e., candidates for, Extirpated, Endangered, or Threatened status in British Columbia. They have an [S3S4](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are imperiled.
+The coastal subspecies are [*red listed*](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/red-blue-yellow-lists), i.e., candidates for, Extirpated, Endangered, or Threatened status in British Columbia. They have an [S2](https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/conservation-data-centre/explore-cdc-data/status-ranks) conservation status, meaning they are 'imperiled'.
 
-
- High Risk in the Skeena Region; developed an Action Plan for Recovery and Conservation in 2018, which included immediate actions to halt the decline adn prevent the spp. form becvomign endangered or extiprated form teh area (Eamer 2018). For exmapel, this inlcuded consrvign new breedign areas adn known terriorties
- 
- in Skeena region; set goal of achieving  a minimum level of 100 intact territories per TSA ( Doyle, F.I., A. Coosemans, and L. Rach. 2017. Northern Goshawk (Accipiter gentilis ssp.
-atricapillus) Management Strategy for the Skeena Region; March 2017. British Columbia
-Ministry Forests, Lands, and Natural Resource Operations. Smithers, BC. Pp 1-36)
-
-currently no formal protection for interior goshawks in Skeena region; working on listing them as Regionally Important Wildlife (RIW) to allow for  GAR protections;  at minimum 6 months away, if approved.
-
-- he Skeena Goshawk Stabilization Project (initiated in 2017
+Within the Skeena region specifically, severe population declines precipitated the development of a "Northern Goshawk (*Accipiter gentilis ssp. atricapillus*) Management Strategy for the Skeena Region" (Doyle et al. 2017. British Columbia Ministry Forests, Lands, and Natural Resource Operations. Smithers, BC. Pp 1-36), which included a goal of achieving a minimum level of 100 intact territories per timber supply area (TSA), and an "Action Plan for Recovery and Conservation" in 2018, which included immediate actions to halt the decline and prevent the species from becoming endangered or extirpated form the area (Eamer 2018). There are currently no legal protections for interior subspecies of northern goshawk in the Skeena region, but work is ongoing to list them as "regionally important wildlife" (RIW) to allow for implementation of government action regulation (GAR) protections.
 
 ### Importance to First Nations Governments
-- -	First Nations have expressed interest in preserving goshawk, however, goshawk are not as high priority as other values
-
+First Nations in the region have expressed concern with declining northern goshawk populations, and interest in their conservation. However, northern goshawk are not as high priority as other wildlife values, such as moose and grizzly bear. 
 
 ## Relationship to Forestry
-- key goshawk habitat is mature and old-growth coniferous forest stands that provide closed canopies and open understories (Eamer 2018), and thus forest harvest can be a threat to goshawk habtiat
-- need to maitnain mature to old (>80 year old) forest intact within 100m of nay nest sites
-- highly sensitive to forestry; loss of habitat
-- mountain pine beetle also a likely sifgnifcant caue fo habitat loss, by killign large confier trees, reducing canopy closure (Doyle 2014)
-- may ne imprtoant to limtiing the size of small mamlla popautlions that coudl damage vegetatiob, includign seedlings (Doyle 2015)
-
-- a northern goshawk analysis as part of tactical forest planning analysis for the Morice TSA was completed by a contrasctor to assess harvest volume under potential habtiat managment regimes for goshawaks and fisher (Ecora 2021; Timber Supply Analysis of Goshawk Management Objectives in the Morice TSA. Ecora File No.: KE-13-053)
-
-
+Mature and old coniferous forest that provides closed canopies and open understory is key habitat for northern goshawk (Eamer 2018). Therefore, forest harvest can potentially be a threat to goshawk habitat, and goshawk populations are sensitive to the rate of forest harvest in a region. The mountain pine beetle outbreaks also likely can make a significant contribution to habitat loss, by killing large conifer trees, reducing canopy closure (Doyle 2014).
+ 
+Northern goshawk may also play an important role in forest regeneration, by limiting small mammal populations that can forage on and damage seedlings (Doyle 2015).
 
 ### Forest Stand Characteristics
-
-need 2400 ha patches with > 70% mature to old (>80 year old) forest (EAmer 2018); conventional harvest in  <30% of the foraging area and partial harvests in <30% of the remaining 70% of area
-- 'core of 100 ha of breedign habtiat surrocunded by >30-50% mature forest (Doyle 2015. Occupancy and Status of Northern Goshawk Breeding Areas in the Coast Mountains (Kalum), Nadina and Skeena Stikine Resource Districts)
-- two-thirds of theforested landscape in mature forest condition and approximately one-third in early seral herb/shrub (plus some pole sapling), may represent a near optimal distribution for goshawk foraging suitability;   As the proportion of mature forest decreases (especially below 25% of the landscape) and the proportion of mid seral and young forest stages increase, it is likely that goshawk densities will decrease. (Mahon 2009. Northern Goshawks in West-Central British Columbia 10-Year Project Summary )
-
-
-
+As northern goshawk are territorial species, they require large (2,400 ha) contiguous patches of forest that are >70% mature to old (>80 year old; Eamer 2018; Mahon 2009. Northern Goshawks in West-Central British Columbia 10-Year Project Summary). Within these patches, goshawk may have one to three nesting sites, which must be surrounded by completely intact mature to old within 100 m of the nest (Ecora 2021. Timber Supply Analysis of Goshawk Management Objectives in the Morice TSA. Ecora File No.: KE-13-053). When the proportion of mature to old forest drops below 25% on a landscape, then is is likely that goshwalk popautlions will decrease (Mahon 2009).
 
 ## Current Conditions
-
-
+Below summarizes some information on current population and habitat conditions for northern goshawk in the Kispiox TSA.
 
 ### Population Status and Trend
-- in Skeena region occupancy of approximatelt 100 known nest sites has decreased substianlly since the early 2000,'s from approximately 70% occupancy to approximately 25% occupancy in the mid-2000's to approximately 10% in teh mid-2010's (Eamer 2018)
-- Goshawks have abandoned 95% of previously known territories and only 19% of confirmed territories in the Skeena Region remain intact (Eamer 2018)
-- Habitat loss and degradation appear to be the primary causes of regional population declines.  (Doyle at al. 2017)
-- 17 active breedign aras of 129 confirmed breedign areas in 2014 (Doyle at al. 2017) 
-- re-surveyd 33 known breedign sites in Nadina district 2014; only 4 were occupied (Doyle 2014. Post Mountain Pine Beetle the Status of Northern Goshawk Breeding Areas in the Nadina Resource District)
-- in 2015, re-surveyed 72 breeding areas in Kalum, Nadina and Skeena-Sitkine, and found only 2 occupied; 16 of 45 breedin sites in Nadian were harvested  (Doyle2015)
-- 115 known breeding areas across Kalum, Nadina and Skeena-Sitkine districts, 25% meeting habitat requirements and 29% harvested (Doyle 2015)
--  From 1998  to 2007, average annual occupancy of >20 nest s declined from 72% to 26%; magnitude of change is similar between the SBS and ICH suggesting that the cause of the decline is not related to the epidemic MPB infestation (Mahon 2009)
+Northern goshawk populations have been in significant decline in the Skeena region over the last 20 years. Throughout the region, between the early 2000's to late 2010's, 95% of previously known goshawks territories were found to be abandoned, and only 19% of these territories had intact habitat (Eamer 2018). From 1998 to 2007, the average annual occupancy of over 20 known nests declined from 72% to 26% (Mahon 2009). In a 2014 survey of 129 previously confirmed breeding areas in the Skeena region, only 17 had active breeding pairs (Doyle at al. 2017). Habitat loss and degradation appear to be the primary causes of these regional population declines (Doyle at al. 2017). There are currently thirteen known territories in the region that were identified as active between 2016 to 2020. 
 
+```{r, nogo territories, fig.cap = "Figure 2. Known Active Northern Goshawk Territories Identified in the Kipsiox Timber Supply Area between 2016 to 2020.", eval = T, echo = F, message = F, warning = F}
+
+nogo_terr_tsa <- nogo_terr %>%
+                  filter (STATUS == "ACTIVE" & TSA == "KISPIOX") 
+
+ggplot (data = nogo_terr_tsa) +
+        geom_sf (data = lu, aes(fill = LANDSCAPE_UNIT_NAME)) +
+        geom_sf (data = nogo_terr_tsa, fill = NA, linetype = "solid", size = 1, colour = "red") +
+        geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +              scale_fill_viridis (option = "viridis", 
+                            discrete = T) +
+        guides (fill = guide_legend (title = "Landscape Unit")) +
+        annotation_scale (location = "br", 
+                          width_hint = 0.5, 
+                          height = unit (0.1, "cm")) +
+        annotation_north_arrow (location = "tl", 
+                                which_north = "true", 
+                                style = north_arrow_fancy_orienteering,
+                                height = unit (1.25, "cm"),
+                                width = unit (1, "cm")) 
+        labs (caption = "Known active northern goshawk territory boundaries in red.")
+```
 
 ### Forest Stand Characteristics
+Northern goshawk territories require a minimum of 70% of the forested area to be over 80 years old (Ecora 2021). Below illustrates the percentage of old forest in each known active northern goshawk territories in the Kispiox TSA. Seven of the 13 territories had over 70% old forest, 12 of the thirteen territories had over 60% old forest, and one territory had 38% old forest. Thus, the majority of territories appear to meet old forest requirements and most are close to the threshold.
 
+```{r, nogo habitat, fig.cap = "Figure 3. Percent of Mature and Old Forest in Known Active Northern Goshawk Territories Identified in the Kipsiox Timber Supply Area between 2016 to 2020.", eval = T, echo = F, message = F, warning = F}
 
+nogo_terr_tsa <- nogo_terr %>%
+                  filter (STATUS == "ACTIVE" & TSA == "KISPIOX") 
+nogo_terr_tsa_union <- nogo_terr_tsa %>%
+                        group_by (Name) %>% 
+                          summarize (geometry = st_union(Shape))
+vri_nogo <- st_intersection (vri, nogo_terr_tsa_union)
 
+vri_nogo$area <- st_area (vri_nogo)
+vri_nogo$area_km2 <- vri_nogo$area / 1000000
+vri_nogo$area_km2 <- units::drop_units (vri_nogo$area_km2)
 
+forest_nogo <- st_drop_geometry (vri_nogo %>%
+                                  group_by (Name) %>%
+                                   filter (BCLCS_LEVEL_1 == 'V' & BCLCS_LEVEL_2 == 'T') %>%
+                                    summarise (forest_area_km2 = sum (area_km2)))
 
+old_forest_nogo <- st_drop_geometry (vri_nogo %>%
+                              group_by (Name) %>%
+                                filter (BCLCS_LEVEL_1 == 'V' & BCLCS_LEVEL_2 == 'T' & PROJ_AGE_1 > 79) %>%
+                                  summarise (old_forest_area_km2 = sum (area_km2)))
+
+nogo_perc_for <- merge (forest_nogo, old_forest_nogo, by = "Name", all = T)
+
+nogo_perc_for$percent_old <- (nogo_perc_for$old_forest_area_km2 / nogo_perc_for$forest_area_km2) * 100
+
+nogo_terr_tsa_union <- merge (nogo_terr_tsa_union, nogo_perc_for, by = "Name", all = T)
+
+ggplot (data = nogo_terr_tsa_union) +
+        geom_sf (data = lu) +
+        geom_sf (aes (fill = percent_old)) +
+        geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +
+        xlab("Longitude") + ylab("Latitude") +
+        scale_fill_viridis (option = "magma", breaks = c (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)) +
+        guides (fill = guide_legend (title = "Percent (%) Old Forest")) +
+        annotation_scale(location = "br", width_hint = 0.5, pad_y = unit(-0.001, "in")) +
+        annotation_north_arrow(location = "br", which_north = "true", 
+              pad_x = unit(0, "in"), pad_y = unit(0.1, "in"),
+              style = north_arrow_fancy_orienteering) +
+        labs (caption = "Kispiox TSA boundary indicated by green dashed line.") +
+        theme (axis.text.x = element_text (angle = 30, hjust = 1))
+
+```
 
 ## Future Conditions
 - analyze outputs from timber supply models, if/when available
 
-### Alternate Forest Management Regimes for Moose
-- is there a moose focused scenario we could analyze?
+### Alternate Forest Management Regimes for Northern Goshawk
+Recently, a tactical forest planning analysis was completed in the Morice TSA to assess harvest volume under potential habitat management regimes for northern goshawk (Ecora 2021; Timber Supply Analysis of Goshawk Management Objectives in the Morice TSA. Ecora File No.: KE-13-053). The analysis divided the timber supply area into 2,400 ha hexagons (an average northern goshawk territory size), and the model used in the analysis required 70% of a simulated territory to have a minimum of 70% mature and old forest, with no harvest in a 100 ha subset of the habitat representing a breeding territory.
 
-
+Here we apply a similar approach....?
 
 ### Forest Stand Characteristics
-- future proportion of 5 to 30 year old cutblocks
+- future proportion of old forest in territories....
 
 ### Timber Supply
-- comparison of timber supply between base case and 'moose case'
+- comparison of timber supply between base case and 'goshawk case'
 
-## Mitigating Potential Impacts of Forest Harvest to Moose
-- currently mamaged under BMPs to protected nestin sites (100 ha buffer), but doesnt; necessariyl portect foraging area aroudj them (2400 ha); disensntive to report adn protect nest (Eamer 2018); need to insentivize 
+For reference, in the Morice TSA tactical analysis, conserving habitat for northern goshawk resulted in a decline of harvest volume form 3% to 6% in the short-term and 1% to 2% in the long term (Ecora 2021). The analysis also indicated that greater than 100 territories could be managed with no impact on timber supply over the next 20 years.
 
-- AAC determination can be used as a tool to set aside habitat targets for goshawk territory requirements (Doyle at al. 2017) 
+## Mitigating Potential Impacts of Forest Harvest to Northern Goshawk
+Northern goshawk are currently managed under 'best management practices' (BMP), where recommendation have been made to protect forested areas within 100 m of nesting sites. These BMPs do not appear to have successfully sustained northern goshawk populations, as they do not provide protections for large (>2,400 ha) foraging territories (Eamer 2018). 
 
--maitaian habtait to support as alrge a popautlion as possible; resilient to climate change impacts (Douyle 2015)
-
-- anticipate >100 territories can be managed with NO impact on timber supply  (over the next 20 years) in the Mroice TSA. 
+AAC determinations have been recommended as a tool to set aside habitat targets for goshawk territory requirements (Doyle at al. 2017). 
 
 ## Uncertainties and Limitations 
+Known goshawk territories shown here may not be currently occupied.
