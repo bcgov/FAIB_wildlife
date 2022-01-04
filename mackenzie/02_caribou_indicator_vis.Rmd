@@ -25,7 +25,7 @@ Here we assess the influence of current and hypothetical simulated future forest
 
 'Disturbance' is defined here as areas less than 500 m from roads or early seral (less than 40 year old) forestry cutblocks, or areas burned in the last 40 years. These disturbance types have been negatively correlated with caribou survival rates and population abundance across Canada, and therefore are often used to indicate the effects of habitat change caused by forestry and fire on caribou populations. Other disturbance types (e.g., mountain pine beetle infestations or industrial activities like oil and gas or mining development) may also negatively influence caribou, but we do not account for them here. We focus exclusively on fire and forestry because forest management is the scope of the timber supply review and only future forestry and fire are simulated by the timber supply model. In addition, the summary here does not analyze or discuss the potential influence of wildlife population management actions, such as caribou maternity pens or wolf reduction, on caribou populations, as these are outside the scope of a timber supply review.  
 
-We assess two forest harvest simulations, the 'base case' (BC) and 'indigenous alternative flow" (IAF), where each simulation represents different inputs to the model. The BC approximates current forestry practices in the Mackenzie TSA carried forward into the future. In particular, existing legal requirements on forest harvest are used to define where forestry activities can, or cannot occur in the future. The IAF represents forest harvest practices where additional constraints have been created with the intent of maintaining indigenous values in the Mackenzie TSA. 
+We assess two forest harvest simulations, the 'base case' (BC) and 'indigenous alternative flow' (IAF), where each simulation represents different inputs to the model. The BC approximates current forestry practices in the Mackenzie TSA carried forward into the future. In particular, existing legal requirements on forest harvest are used to define where forestry activities can, or cannot occur in the future. The IAF represents forest harvest practices where additional constraints have been created with the intent of maintaining indigenous values in the Mackenzie TSA. 
 
 ```{r load spatial data, warning = F, message = F, echo = F, include = F }
 # load spatial data
@@ -734,7 +734,7 @@ ggplot (data = crithab.plot.data.grh.iaf,
 
 #### Northern Caribou Ranges
 ##### High Elevation Habitat
-At the time of this analysis, critical habitat was not defined for the Frog, Gataga, Muskwa, Pink Mountain, Rabbit and Spatsizi subpopulations, so here we estimate disturbance within their subpopulation ranges at higher (greater than 1,300 m) and lower (less than or equal to 1,300 m) elevations. 
+At the time of this analysis, critical habitat was not defined for the Chase, Finlay, Frog, Gataga, Muskwa, Pink Mountain, Rabbit, Scott, Spatsizi, Thutade and Wolverine subpopulations, so here we estimate disturbance within their subpopulation ranges at higher (greater than 1,300 m) and lower (less than or equal to 1,300 m) elevations. 
 
 In the BC, disturbance remained relatively low (i.e., <10%) within the high elevation range of most of the subpopulations throughout the simulation period. The exceptions were the Scott subpopulation, which increased from 28% to 58% from 2020 to 2040, the Wolverine subpopulation, which increased from 11% to 32% from 2020 to 2090 and the Chase subpopulation, which increased from 11% to 24% from 2020 to 2090.
 
