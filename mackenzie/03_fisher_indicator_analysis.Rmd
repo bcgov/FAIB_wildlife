@@ -3,9 +3,9 @@ title: "Mackenzie TSA Fisher Indicator"
 author: "Tyler Muhly"
 date: "20/01/2022"
 output:
-  word_document: default
   html_document:
     keep_md: yes
+  word_document: default
 ---
 
 ```{r setup, include = FALSE, echo = FALSE, message = FALSE}
