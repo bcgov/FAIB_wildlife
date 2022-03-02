@@ -1,7 +1,7 @@
 ---
 title: "Northern Goshawk Analysis for the Kispiox Timber Supply Review"
 author: "Tyler Muhly, Forest Analysis and Inventory Branch"
-date: "8/12/2021"
+date: "01/03/2022"
 output: html_document
 ---
 
@@ -75,21 +75,22 @@ Mature and old coniferous forest that provides closed canopies and open understo
 While northern goshawk are sensitive to forestry, they can contribute positively to forest regeneration. In some areas northern goshawk likely limit the abundance of small mammal populations that forage on and damage tree seedlings (*Doyle 2015. Occupancy and Status of Northern Goshawk Breeding Areas in the Coast Mountains (Kalum), Nadina and Skeena Stikine Resource Districts. Wildlife Dynamics Consulting.*).
 
 ### Forest Stand Characteristics
-As northern goshawk are territorial species, they require large (2,400 ha) continuous patches of forest that are >70% mature to old forest that serve as breeding home ranges (Mahon 2009; Eamer 2018). These mature to old forest stands should be greater than 20m tall a minimum 50% closed canopy (*Doyle etl. 209. A Tactical Plan (FPB Feb 2019) for Northern Goshawks in the Skeena Region*). Within these patches, goshawk may have one to three nesting sites, which must be surrounded by completely intact mature to old forest within 100m of the nest that serve as core breeding areas (*Ecora 2021. Timber Supply Analysis of Goshawk Management Objectives in the Morice TSA. Ecora File No.: KE-13-053*). At a broader scale, when the proportion of mature to old forest drops below 25% on a landscape, then it is likely that goshawk populations will decrease (Mahon 2009).
+As northern goshawk are territorial species, they require large (2,400 ha) continuous patches of forest that are >80% mature to old forest (>80 years old) that serve as breeding home ranges (Mahon 2009; Eamer 2018; Doyle report???). These mature to old forest stands should be greater than 20m tall, and a minimum 50% closed canopy (*Doyle et al. 2019. A Tactical Plan (FPB Feb 2019) for Northern Goshawks in the Skeena Region*). Within these patches, goshawk may have one to three nesting sites, surrounded by completely intact mature to old forest within 100m of the nest that serve as core breeding areas (*Ecora 2021. Timber Supply Analysis of Goshawk Management Objectives in the Morice TSA. Ecora File No.: KE-13-053*). At a broader scale, when the proportion of mature to old forest drops below 25% on a landscape, then it is likely that goshawk populations will decrease (Mahon 2009).
 
 ## Current Conditions
 Below summarizes some information on current population and habitat conditions for northern goshawk in the Skeena region and Kispiox TSA.
 
 ### Population Status and Trend
-Northern goshawk populations have been in significant decline in the Skeena region over the last 20 years. Throughout the region, between the early 2000's to late 2010's, 95% of 151 previously known occupied goshawks territories were later found to be abandoned, and upon revisit surveys, only 19% of these territories had sustained intact habitat (Eamer 2018). From 1998 to 2007, the average annual occupancy of over 20 known nests declined from 72% to 26% (Mahon 2009). In a 2014 survey of 129 previously confirmed breeding areas in the Skeena region, only 17 had active breeding pairs (Doyle at al. 2017). Habitat loss and degradation appear to be the primary causes of these regional population declines (Doyle at al. 2017). There are currently thirteen known territories in the Kispiox TSA that were identified as active breeding sites between 2016 to 2020. 
-```{r, nogo territories, fig.cap = "Figure 2. Known Active Northern Goshawk Territories (red outline) Identified in the Kipsiox Timber Supply Area between 2016 to 2020.", eval = T, echo = F, message = F, warning = F}
+Northern goshawk populations have been in significant decline in the Skeena region over the last 20 years. Throughout the region, between the early 2000's to late 2010's, 95% of 151 previously known occupied goshawks territories were later found to be abandoned, and upon revisit surveys, only 19% of these territories had sustained intact habitat (Eamer 2018). From 1998 to 2007, the average annual occupancy of over 20 known nests declined from 72% to 26% (Mahon 2009). In a 2014 survey of 129 previously confirmed breeding areas in the Skeena region, only 17 had active breeding pairs (Doyle at al. 2017). Habitat loss and degradation appear to be the primary causes of these regional population declines (Doyle at al. 2017). There were twelve known territories fully within the Kispiox TSA in 2021. In addition, there were 92 'predicted' territories, determined based on forest inventory, biogeoclimatic ecosystem classification and satellite data. 
+
+```{r, nogo territories, fig.cap = "Figure 2. Active and Predicted Northern Goshawk Territories (red outline) Identified in the Kipsiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
 
 nogo_terr_tsa <- nogo_terr %>%
-                  filter (STATUS == "ACTIVE" & TSA == "KISPIOX") 
+                  filter (STATUS == "ACTIVE" | STATUS == "PREDICTED") 
 
 ggplot (data = nogo_terr_tsa) +
-        geom_sf (data = lu, aes(fill = LANDSCAPE_UNIT_NAME)) +
-        geom_sf (data = nogo_terr_tsa, fill = NA, linetype = "solid", size = 1, colour = "red") +
+        geom_sf (data = lu, aes (fill = LANDSCAPE_UNIT_NAME)) +
+        geom_sf (data = nogo_terr_tsa, aes (colour = STATUS), size = 0.5) +
         geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +              scale_fill_viridis (option = "viridis", 
                             discrete = T) +
         guides (fill = guide_legend (title = "Landscape Unit")) +
@@ -105,14 +106,14 @@ ggplot (data = nogo_terr_tsa) +
 ```
 
 ### Forest Stand Characteristics
-Northern goshawk territories require a minimum of 70% of the forested area within them to be over 80 years old for them to effectively support a breeding pair (Mahon 2009; Eamer 2018; Ecora 2021). Below illustrates the percentage of old forest in each known active northern goshawk territory in the Kispiox TSA. Seven of the 13 territories had over 70% old forest, 12 of the thirteen territories had at least 60% old forest, and one territory had 38% old forest (however, note that the majority of this territories area occurs outside of the Kispiox TSA). Thus, the majority of territories appear to meet old forest requirements, and most of the territories are at least within 10% of the threshold.
+Northern goshawk territories require a minimum of 80% of the forested area within them to be over 80 years old for them to effectively support a breeding pair (Doyle, report???). Below illustrates the percentage of old forest in each known active northern goshawk territory in the Kispiox TSA. Five of the 12 active territories had over 80% mature and old forest, and 83 of the 92 predicted territories had over 80% mature and old forest. Thus, currently less than half of the active territories met the old forest requirements, but over 90% of the predicted territories met the old forest requirements.
 
-```{r, nogo habitat, fig.cap = "Figure 3. Percent of Mature and Old Forest in Known Active Northern Goshawk Territories Identified in the Kipsiox Timber Supply Area between 2016 to 2020.", eval = T, echo = F, message = F, warning = F}
+```{r, nogo habitat, fig.cap = "Figure 3. Percent of Mature and Old Forest in Active and Predicted Northern Goshawk Territories Identified in the Kipsiox Timber Supply Area.", eval = T, echo = F, message = F, warning = F}
 
 nogo_terr_tsa <- nogo_terr %>%
-                  filter (STATUS == "ACTIVE" & TSA == "KISPIOX") 
+                  filter (STATUS == "ACTIVE" | STATUS == "PREDICTED") 
 nogo_terr_tsa_union <- nogo_terr_tsa %>%
-                        group_by (Name) %>% 
+                        group_by (Name, STATUS) %>% 
                           summarize (geometry = st_union(Shape))
 vri_nogo <- st_intersection (vri, nogo_terr_tsa_union)
 
@@ -137,8 +138,9 @@ nogo_perc_for$percent_old <- (nogo_perc_for$old_forest_area_km2 / nogo_perc_for$
 nogo_terr_tsa_union <- merge (nogo_terr_tsa_union, nogo_perc_for, by = "Name", all = T)
 
 ggplot (data = nogo_terr_tsa_union) +
+       # geom_sf (data = nogo_terr_tsa_union, aes (colour = STATUS), size = 1) +
         geom_sf (data = lu) +
-        geom_sf (aes (fill = percent_old)) +
+        geom_sf (aes (fill = percent_old, colour = STATUS), size = 1) +
         geom_sf (data = tsa_bound, fill = NA, linetype = "longdash", size = 1.1, colour = "green") +
         xlab("Longitude") + ylab("Latitude") +
         scale_fill_viridis (option = "magma", breaks = c (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)) +
@@ -156,12 +158,12 @@ ggplot (data = nogo_terr_tsa_union) +
 - analyze outputs from timber supply models, if/when available
 
 ### Alternate Forest Management Regimes for Northern Goshawk
-Recently, a tactical forest planning analysis was completed in the Morice TSA to assess harvest volume under potential habitat management regimes for northern goshawk (Ecora 2021). The analysis divided the TSA into 2,400 ha hexagons to simulate the distribution of northern goshawk territories, and the model used in the analysis required 70% of a simulated territory to have a minimum of 70% mature and old forest, with no harvest in a 100 ha subset of the habitat representing a breeding territory.
+Recently, a tactical forest planning analysis was completed in the Morice TSA to assess harvest volume under potential habitat management regimes for northern goshawk (Ecora 2021). The analysis divided the TSA into 2,400 ha hexagons to simulate the distribution of northern goshawk territories, and the model used in the analysis required 70% of a simulated territory to have a minimum of 80 year old (mature and old) forest, with no harvest in a 100 ha subset of the habitat representing a breeding territory.
 
-Here we apply a similar approach....?
+Here we apply a similar approach, but using a threshold of 80% of a simulated territory to have greater than 80 year old forest. More recent analysis suggests that northern goshawk require a minimum of 80% to 90% of their territories to have greater than 80 year old forest for succesfull breeding (Doyle report???).
 
 ### Forest Stand Characteristics
-- future proportion of old forest in territories....?
+- future proportion of old forest in territories....
 
 ### Timber Supply
 - comparison of timber supply between base case and 'goshawk case'...?
@@ -169,11 +171,11 @@ Here we apply a similar approach....?
 For reference, results of the Morice TSA tactical forest planning analysis found that conserving habitat for northern goshawk resulted in a decline of annual harvest volume between 3% to 6% in the short-term and 1% to 2% in the long term (Ecora 2021). The analysis also indicated that greater than 100 territories could be maintained with >70% mature to old forest in the TSA with no impact on timber supply over the next 20 years.
 
 ## Mitigating Potential Impacts of Forest Harvest to Northern Goshawk
-Northern goshawk are currently managed under 'best management practices' (BMPs), where recommendations have been made to protect forested areas within 100 m of nesting sites. These BMPs do not appear to have successfully sustained northern goshawk populations, as they do not provide protections for large (>2,400 ha) foraging territories (Eamer 2018). 
+Northern goshawk are currently managed under 'best management practices' (BMPs), where recommendations have been made to protect forested areas within 100m of nesting sites. These BMPs do not appear to have successfully sustained northern goshawk populations, as they do not provide protections for large (>2,400 ha) foraging territories (Eamer 2018). 
 
 AAC determinations have been recommended as a tool to set aside habitat targets for goshawk territory requirements (Doyle at al. 2017). 
 
 ## Uncertainties and Limitations 
-Known goshawk territories shown here may not be currently occupied, as some of the data is up to 5 years old. However, there are likely occupied territories in the Kispiox TSA that have not been detected, and 13 territories is likely not a viable minimum population size, therefore maintaining habitat conditions outside of these territories will be critical to their conservation. 
+Known goshawk territories shown here may not be currently occupied, as some of the data is up to 5 years old. However, there are likely occupied territories in the Kispiox TSA that have not been detected, and 12 territories is likely not a viable minimum population size, therefore maintaining habitat conditions outside of these territories (e.g., in predicted territory areas) will be critical to their conservation. 
 
 Northern goshawk declines also seem to be related to earlier springs and subsequent hatching of blackflies and blowflies that attack featherless, vulnerable northern goshawk hatchlings (Eamer 2018). Intact habitat is a critical pre-requisite to conserving and maintaining northern goshawk populations, but insects may be an increasingly important limiting factor to populations.
