@@ -1,0 +1,17 @@
+"","Scenario","Year","Total_Occupied"
+"1","Base Case",2020,822.697646123181
+"2","Base Case",2030,828.495041869144
+"3","Base Case",2040,794.515171905212
+"4","Base Case",2050,802.944391007903
+"5","Base Case",2060,790.327590809213
+"6","Base Case",2070,785.658883129486
+"7","Base Case",2080,772.807949262937
+"8","Base Case",2090,777.637692293588
+"9","South Partition-Yield 75%",2020,822.697646123181
+"10","South Partition-Yield 75%",2030,811.047878673363
+"11","South Partition-Yield 75%",2040,811.855337050054
+"12","South Partition-Yield 75%",2050,826.605335050008
+"13","South Partition-Yield 75%",2060,818.701642394247
+"14","South Partition-Yield 75%",2070,832.672768899343
+"15","South Partition-Yield 75%",2080,811.308559515199
+"16","South Partition-Yield 75%",2090,819.460689906821

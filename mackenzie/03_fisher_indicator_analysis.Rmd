@@ -136,6 +136,7 @@ cutblocks.open <- cutblocks %>%
 cutblocks.open$cutblock_2030 <- 1
 cutblocks.open <- st_cast (cutblocks.open, to = "MULTIPOLYGON")
 cutblocks.open.2030.ras <- fasterize::fasterize (cutblocks.open, ras.cut.sim, field = "cutblock_2030") 
+cutblocks.open.2030.ras [is.na(cutblocks.open.2030.ras)] <- 0 
 ras.cut.new.2030.bc <- raster::reclassify (ras.cut.sim, # cutblocks cut 2020 to 2030
                                         c (0,11,1, 11,Inf,0))        
 cutblocks.open.2030.ras.bc <- ras.cut.new.2030.bc + cutblocks.open.2030.ras                                        
@@ -183,6 +184,7 @@ cutblocks.open <- cutblocks %>%
 cutblocks.open$cutblock_2030 <- 1
 cutblocks.open <- st_cast (cutblocks.open, to = "MULTIPOLYGON")
 cutblocks.open.2030.ras <- fasterize::fasterize (cutblocks.open, ras.cut.sim, field = "cutblock_2030") 
+cutblocks.open.2030.ras [is.na(cutblocks.open.2030.ras)] <- 0 
 ras.cut.new.2030.iaf <- raster::reclassify (ras.cut.sim.iaf, # cutblocks cut 2020 to 2030
                                         c (0,11,1, 11,Inf,0))        
 cutblocks.open.2030.ras.iaf <- ras.cut.new.2030.iaf + cutblocks.open.2030.ras                                        
@@ -278,29 +280,30 @@ The sum of probability of occupancy values of all FETAs in the Mackenzie TSA was
 sum.occ <- data.frame (matrix (ncol = 3, nrow = 0))
 colnames (sum.occ) <- c('Scenario', 'Year', 'Total_Occupied')
 
-sum.occ [c(1:7), 1] <- "Base Case"
-sum.occ [c(8:14), 1] <- "South Partition-Yield 75%"
-sum.occ [c(1:14), 2] <- c(2020, 2040, 2050, 2060, 2070, 2080, 2090,  
-                          2020, 2040, 2050, 2060, 2070, 2080, 2090 
-                          #2030, 2030
+sum.occ [c(1:8), 1] <- "Base Case"
+sum.occ [c(9:16), 1] <- "South Partition-Yield 75%"
+sum.occ [c(1:16), 2] <- c(2020, 2030, 2040, 2050, 2060, 2070, 2080, 2090,
+                          2020, 2030, 2040, 2050, 2060, 2070, 2080, 2090
                           )
 
 sum.occ [1,3] <- sum (hex.grid$perc_occ_2022_bc)
-sum.occ [2,3] <- sum (hex.grid$perc_occ_2040_bc)
-sum.occ [3,3] <- sum (hex.grid$perc_occ_2050_bc)
-sum.occ [4,3] <- sum (hex.grid$perc_occ_2060_bc)
-sum.occ [5,3] <- sum (hex.grid$perc_occ_2070_bc)
-sum.occ [6,3] <- sum (hex.grid$perc_occ_2080_bc)
-sum.occ [7,3] <- sum (hex.grid$perc_occ_2090_bc)
-sum.occ [8,3] <- sum (hex.grid$perc_occ_2022_iaf)
-sum.occ [9,3] <- sum (hex.grid$perc_occ_2040_iaf)
-sum.occ [10,3] <- sum (hex.grid$perc_occ_2050_iaf)
-sum.occ [11,3] <- sum (hex.grid$perc_occ_2060_iaf)
-sum.occ [12,3] <- sum (hex.grid$perc_occ_2070_iaf)
-sum.occ [13,3] <- sum (hex.grid$perc_occ_2080_iaf)
-sum.occ [14,3] <- sum (hex.grid$perc_occ_2090_iaf)
-# sum.occ [15,3] <- sum (hex.grid$perc_occ_2030_bc)
-# sum.occ [16,3] <- sum (hex.grid$perc_occ_2030_iaf)
+sum.occ [2,3] <- sum (hex.grid$perc_occ_2030_bc)
+sum.occ [3,3] <- sum (hex.grid$perc_occ_2040_bc)
+sum.occ [4,3] <- sum (hex.grid$perc_occ_2050_bc)
+sum.occ [5,3] <- sum (hex.grid$perc_occ_2060_bc)
+sum.occ [6,3] <- sum (hex.grid$perc_occ_2070_bc)
+sum.occ [7,3] <- sum (hex.grid$perc_occ_2080_bc)
+sum.occ [8,3] <- sum (hex.grid$perc_occ_2090_bc)
+sum.occ [9,3] <- sum (hex.grid$perc_occ_2022_iaf)
+sum.occ [10,3] <- sum (hex.grid$perc_occ_2030_iaf)
+sum.occ [11,3] <- sum (hex.grid$perc_occ_2040_iaf)
+sum.occ [12,3] <- sum (hex.grid$perc_occ_2050_iaf)
+sum.occ [13,3] <- sum (hex.grid$perc_occ_2060_iaf)
+sum.occ [14,3] <- sum (hex.grid$perc_occ_2070_iaf)
+sum.occ [15,3] <- sum (hex.grid$perc_occ_2080_iaf)
+sum.occ [16,3] <- sum (hex.grid$perc_occ_2090_iaf)
+
+#write.csv (sum.occ, "C:\\Work\\git\\faib\\FAIB_wildlife\\mackenzie\\fisher_occ_data.csv")
 
 ```
 
