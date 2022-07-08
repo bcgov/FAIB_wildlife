@@ -35,7 +35,7 @@ I assessed two forest harvest simulations, the 'base case' and 'south partition-
 # current habitat data
 tsa_bound <- st_make_valid (sf::st_read("D:/tsr/mackenzie/data/mackenzie_2022.gdb", layer = "tsa_bounds", quiet = T))
 cutblocks <- st_make_valid (sf::st_read("D:/tsr/mackenzie/data/mackenzie_2022.gdb", layer = "cutblocks", quiet = T))
-vri <- st_make_valid (sf::st_read(here ("D:/tsr/mackenzie/data/mackenzie_2022.gdb"), layer = "vri", quiet = T))
+vri <- st_make_valid (sf::st_read(("D:/tsr/mackenzie/data/mackenzie_2022.gdb"), layer = "vri", quiet = T))
 vri <- vri [, c ('FEATURE_ID', 'BEC_ZONE_CODE', 'BEC_SUBZONE', 'BEC_VARIANT', 'BEC_PHASE',
                  'BCLCS_LEVEL_1', 'BCLCS_LEVEL_2', 'BCLCS_LEVEL_3', 'BCLCS_LEVEL_5',
                  'LINE_7B_DISTURBANCE_HISTORY', 'CROWN_CLOSURE', 'BASAL_AREA')]
@@ -485,3 +485,36 @@ Fisher Equivalent Territory Occupancy 2080") +
 In general, the simulated future probability of occupancy of FETAs decreased in central portions of the TSA and increased in southern portions of the TSA in both scenarios. This reflected a shift in forest harvest by the model from southern to central portions of the TSA in the near and mid-term. Overall, the south partition-yield 75% scenario resulted in an approximately 5% greater total probability of occupancy of FETAs than the base case in the mid- to long-term.
 
 An important limitation of the occupancy model approach used here is that it does not consider habitat quality within a FETA. A high probability of occupancy does not necessarily mean there is sufficient habitat within a FETA to support fishers biological needs. These results should therefore be used with significant caution.
+
+```{r, save data,  warning = F, error = F, message = F, echo = F, eval = T}
+
+hex.grid.save <- st_as_sf (st_make_grid (fisher.rge, cellsize = 5886, square = FALSE)) #5886 = 30 km2 territory
+hex.grid.save$fid <- 1:nrow (hex.grid.save)
+
+# add in boreal/columbian pop
+source ("C:/Work/git/clus/R/functions/R_Postgres.R")
+fisher.zone <- st_make_valid (getSpatialQuery ("SELECT hab_zone, wkb_geometry FROM public.fisher_habitat_zones_2020;"))
+
+fisher.zone <- fisher.zone %>% 
+					mutate (boreal = if_else (hab_zone == "Boreal", 1, 0))
+
+hex.grid.fisher.zone <- st_join (hex.grid.save, fisher.zone) %>%
+            					  	group_by(fid) %>%
+            						  	summarize (zone = sum (boreal))
+
+st_write (hex.grid.fisher.zone, "D:/tsr/mackenzie/data/fisher_terr_sub.shp", append = F)
+
+#
+fisher_occ_table <- st_drop_geometry(hex.grid)
+fisher_occ_table <- fisher_occ_table %>%
+            					select ("fid", "perc_occ_2022_bc", "perc_occ_2030_bc",
+            					        "perc_occ_2040_bc", "perc_occ_2050_bc", "perc_occ_2060_bc",
+            					        "perc_occ_2070_bc", "perc_occ_2080_bc", "perc_occ_2090_bc",
+            					        "perc_occ_2022_iaf", "perc_occ_2030_iaf",
+            					        "perc_occ_2040_iaf", "perc_occ_2050_iaf",
+            					        "perc_occ_2060_iaf", "perc_occ_2070_iaf",
+            					        "perc_occ_2080_iaf", "perc_occ_2090_iaf")
+write.csv (fisher_occ_table, "D:/tsr/mackenzie/data/fisher_occ_table.csv")
+
+```
+
